@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Season of the Void - Battle Pass</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        :root {
+            --purple-dark: #1a0a2e; --purple-mid: #2d1b4e; --purple-light: #6b3fa0; --purple-glow: #9d4edd;
+            --gold: #ffd700; --gold-dark: #b8960b; --green: #4ade80; --green-dark: #22c55e;
+            --gray: #374151; --gray-light: #6b7280; --chain-color: #4a4a5a;
+            --cyan-glow: #22d3ee; --blue-glow: #3b82f6;
+        }
+        html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--purple-dark); color: white; }
+        .app-container { width: 100%; height: 100%; max-width: 430px; margin: 0 auto; background: linear-gradient(180deg, #1a0a2e 0%, #0d0618 100%); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+
+        /* Hero Banner */
+        .hero-banner { height: 100px; background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid var(--purple-light); }
+        .hero-banner::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at center, rgba(157, 78, 221, 0.3) 0%, transparent 50%); animation: pulse-bg 4s ease-in-out infinite; }
+        @keyframes pulse-bg { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.8; } }
+        .hero-particles { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; pointer-events: none; }
+        .hero-particle { position: absolute; width: 4px; height: 4px; background: var(--purple-glow); border-radius: 50%; opacity: 0.6; animation: float-particle 3s ease-in-out infinite; }
+        @keyframes float-particle { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; } 50% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
+        .hero-title { font-size: 22px; font-weight: bold; text-transform: uppercase; letter-spacing: 4px; text-align: center; z-index: 1; background: linear-gradient(180deg, #fff 0%, #c9a0ff 50%, #9d4edd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+
+        /* XP Progress Bar */
+        .xp-bar-container { display: flex; align-items: center; padding: 10px 12px; background: rgba(0,0,0,0.3); gap: 10px; }
+        .level-hexagon { width: 44px; height: 50px; position: relative; flex-shrink: 0; }
+        .level-hexagon-bg { width: 100%; height: 100%; background: linear-gradient(180deg, #6b3fa0 0%, #4a2875 100%); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; }
+        .level-hexagon-bg::before { content: ''; position: absolute; inset: 2px; background: linear-gradient(180deg, #5a2d82 0%, #3d1b5c 100%); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
+        .level-hex-star { font-size: 10px; color: var(--gold); z-index: 1; margin-bottom: -2px; }
+        .level-hex-num { font-size: 18px; font-weight: bold; z-index: 1; }
+        .xp-bar-wrapper { flex: 1; }
+        .xp-bar-track { height: 18px; background: rgba(0,0,0,0.5); border-radius: 9px; overflow: hidden; position: relative; border: 1px solid var(--purple-mid); }
+        .xp-bar-fill { height: 100%; background: linear-gradient(90deg, var(--purple-light), var(--purple-glow), #c77dff); border-radius: 9px; transition: width 0.5s ease; }
+        .xp-bar-text { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); font-size: 10px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+
+        /* Navigation */
+        .nav-tabs { display: flex; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--purple-mid); }
+        .nav-tab { flex: 1; padding: 10px 8px; text-align: center; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; border-bottom: 3px solid transparent; position: relative; }
+        .nav-tab.active { background: rgba(157, 78, 221, 0.2); border-bottom-color: var(--purple-glow); }
+        .tab-badge { position: absolute; top: 4px; right: 8px; background: var(--green); color: black; font-size: 9px; padding: 2px 5px; border-radius: 8px; font-weight: bold; }
+
+        /* Main Content */
+        .main-content { flex: 1; overflow: hidden; position: relative; }
+        .tab-content { display: none; height: 100%; overflow-y: auto; padding-bottom: 20px; }
+        .tab-content.active { display: block; }
+
+        /* Battle Pass Layout */
+        .bp-layout { display: flex; height: 100%; overflow: hidden; }
+        .bp-left-panel { width: 38%; background: linear-gradient(180deg, rgba(26, 10, 46, 0.9) 0%, rgba(13, 6, 24, 0.95) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 8px; border-right: 1px solid var(--purple-mid); position: relative; overflow: hidden; }
+        .spotlight-section { display: flex; flex-direction: column; justify-content: center; padding-top: 10px; }
+        .spotlight-header { font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.7); text-align: center; margin-bottom: 8px; text-shadow: 0 0 10px var(--purple-glow); }
+        .grand-reward-card { position: relative; z-index: 1; background: linear-gradient(180deg, #2a1a4a 0%, #1a0a2e 100%); border: 2px solid #8b5cf6; border-radius: 8px; padding: 6px; cursor: pointer; margin-bottom: 0; }
+        .grand-reward-card::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(135deg, #c9a227, #f4d03f, #c9a227); border-radius: 10px; z-index: -1; opacity: 0.6; }
+        .grand-unlock-badge { background: linear-gradient(90deg, #7c3aed, #a855f7); color: white; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 4px; text-align: center; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .grand-unlock-badge .unlock-text { opacity: 0.8; }
+        .grand-unlock-badge .unlock-level { font-size: 12px; }
+        .grand-card-frame { background: linear-gradient(180deg, #3d2066 0%, #2a1248 100%); border: 2px solid #a855f7; border-radius: 6px; padding: 8px; position: relative; overflow: hidden; }
+        .grand-card-art { width: 100%; aspect-ratio: 0.85; background: radial-gradient(circle at center, #6b3fa0 0%, #2d1b4e 60%, #1a0a2e 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
+        .grand-card-icon { font-size: 50px; filter: drop-shadow(0 0 20px var(--purple-glow)); animation: float-armor 3s ease-in-out infinite; }
+        @keyframes float-armor { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        .grand-card-name { font-size: 11px; font-weight: bold; text-align: center; margin-bottom: 2px; }
+        .grand-card-type { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; text-align: center; color: var(--gold); opacity: 0.9; }
+        .grand-reward-card.locked .grand-card-icon { filter: grayscale(0.5) brightness(0.7) drop-shadow(0 0 10px var(--purple-glow)); }
+        .grand-reward-card.claimable { animation: glow-card 2s ease-in-out infinite; }
+        .grand-reward-card.claimable .grand-unlock-badge { background: linear-gradient(90deg, #16a34a, #22c55e); }
+        @keyframes glow-card { 0%, 100% { box-shadow: 0 0 10px #f4d03f; } 50% { box-shadow: 0 0 25px #f4d03f, 0 0 40px rgba(244, 208, 63, 0.5); } }
+        .premium-section { text-align: center; margin-top: 10px; }
+        .premium-label { font-size: 12px; font-weight: bold; color: white; margin-bottom: 6px; text-shadow: 0 0 10px rgba(244, 208, 63, 0.5); }
+        .premium-button { width: 100%; background: linear-gradient(180deg, #f4d03f 0%, #c9a227 50%, #a67c00 100%); border: none; border-radius: 20px; padding: 10px 16px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(244, 208, 63, 0.3); }
+        .premium-button:hover { transform: scale(1.02); box-shadow: 0 6px 20px rgba(244, 208, 63, 0.5); }
+        .premium-button.owned { background: linear-gradient(180deg, var(--green) 0%, var(--green-dark) 100%); cursor: default; }
+        .premium-button.owned:hover { transform: none; }
+        .premium-price { font-size: 18px; font-weight: bold; color: #1a0a2e; }
+
+        .bp-right-panel { flex: 1; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(45, 27, 78, 0.3) 0%, rgba(26, 10, 46, 0.5) 100%); overflow: hidden; }
+        .track-header { display: grid; grid-template-columns: 40px 1fr 1fr; padding: 8px 6px; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--purple-mid); gap: 4px; }
+        .track-header span { font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
+        .track-header .free-label { color: var(--purple-glow); }
+        .track-header .prem-label { color: var(--gold); }
+        .bp-track-scroll { flex: 1; overflow-y: auto; padding: 6px; }
+
+        .bp-level { display: grid; grid-template-columns: 40px 1fr 1fr; gap: 4px; margin-bottom: 6px; padding: 4px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid transparent; transition: all 0.3s; align-items: center; }
+        .bp-level.current-level-row { border-color: var(--purple-glow); background: rgba(157, 78, 221, 0.15); box-shadow: 0 0 10px rgba(157, 78, 221, 0.3); padding: 6px; }
+        .level-hex { width: 28px; height: 32px; position: relative; justify-self: center; }
+        .level-hex-inner { width: 100%; height: 100%; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s; }
+        .level-hex.locked .level-hex-inner { background: linear-gradient(180deg, #4a4a6a 0%, #2a2a4a 100%); }
+        .level-hex.current .level-hex-inner { background: linear-gradient(180deg, #a855f7 0%, #7c3aed 100%); box-shadow: 0 0 15px var(--purple-glow); }
+        .level-hex.completed .level-hex-inner { background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%); }
+        .level-hex-star { font-size: 6px; color: var(--gold); margin-bottom: -2px; }
+        .level-hex-number { font-size: 10px; font-weight: bold; }
+        .bp-level.current-level-row .level-hex { width: 40px; height: 45px; }
+        .bp-level.current-level-row .level-hex-star { font-size: 9px; }
+        .bp-level.current-level-row .level-hex-number { font-size: 15px; }
+        .bp-level.current-level-row .reward-icon { font-size: 44px; }
+        .bp-level.current-level-row .reward-slot { min-height: 75px; }
+        .bp-level.current-level-row .reward-label { font-size: 7px; }
+
+        .reward-slot { aspect-ratio: 1; border-radius: 6px; position: relative; cursor: pointer; transition: all 0.3s; overflow: visible; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px; min-height: 50px; }
+        .reward-slot.free { background: linear-gradient(180deg, #4a3a6a 0%, #2d1b4e 100%); border: 2px solid #6b4a8a; }
+        .reward-slot.premium { background: linear-gradient(180deg, #5a4a2a 0%, #3d2a1a 100%); border: 2px solid #8a6a2a; }
+        .reward-slot.premium.locked-premium { background: linear-gradient(180deg, #3a3a4a 0%, #2a2a3a 100%); border: 2px solid #5a5a6a; }
+        .reward-slot.locked { opacity: 0.5; }
+        .reward-slot.claimable { border-color: var(--gold); animation: pulse-slot 2s infinite; }
+        @keyframes pulse-slot { 0%, 100% { box-shadow: 0 0 5px var(--gold); } 50% { box-shadow: 0 0 15px var(--gold), 0 0 25px rgba(255, 215, 0, 0.5); } }
+        .reward-slot.claimed { opacity: 0.5; }
+        .reward-lock { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); border: 2px solid var(--gold); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 10; box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.4); animation: lock-glow 2s ease-in-out infinite; }
+        @keyframes lock-glow { 0%, 100% { box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.4); } 50% { box-shadow: 0 0 15px var(--gold), 0 0 30px rgba(255, 215, 0, 0.6); } }
+        .reward-icon { font-size: 30px; margin-bottom: 1px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+        .reward-slot.glow-cyan .reward-icon { filter: drop-shadow(0 0 8px var(--cyan-glow)); }
+        .reward-slot.glow-purple .reward-icon { filter: drop-shadow(0 0 8px var(--purple-glow)); }
+        .reward-slot.glow-gold .reward-icon { filter: drop-shadow(0 0 8px var(--gold)); }
+        .reward-label { font-size: 6px; text-transform: uppercase; text-align: center; color: rgba(255,255,255,0.9); padding: 1px 3px; background: rgba(0,0,0,0.5); border-radius: 2px; max-width: 95%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .claimed-check { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 28px; color: var(--green); text-shadow: 0 0 10px var(--green); z-index: 10; }
+
+        /* Quest Panel */
+        .quest-panel { padding: 12px; }
+        .quest-section { margin-bottom: 16px; }
+        .quest-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--purple-mid); }
+        .quest-section-title { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .quest-timer { font-size: 10px; color: var(--purple-glow); }
+
+        /* Week Accordion */
+        .weekly-accordion { margin-top: 8px; }
+        .week-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%); border: 1px solid #3a3a4a; border-radius: 8px; margin-bottom: 4px; cursor: pointer; transition: all 0.3s; }
+        .week-header:hover { background: linear-gradient(180deg, #3a3a4a 0%, #2a2a3a 100%); }
+        .week-header.expanded { background: linear-gradient(180deg, var(--purple-mid) 0%, #2d1b4e 100%); border-color: var(--purple-glow); border-radius: 8px 8px 0 0; margin-bottom: 0; }
+        .week-header.locked { opacity: 0.6; cursor: not-allowed; }
+        .week-header.locked:hover { background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%); }
+        .week-header.completed .week-title { color: var(--green); }
+        .week-header.has-claimable { animation: week-pulse 2s ease-in-out infinite; border-color: var(--purple-glow); }
+        @keyframes week-pulse {
+            0%, 100% { box-shadow: 0 0 5px var(--purple-glow); }
+            50% { box-shadow: 0 0 15px var(--purple-glow), 0 0 25px rgba(157, 78, 221, 0.4); }
+        }
+        .week-header-left { display: flex; align-items: center; gap: 8px; }
+        .week-chevron { font-size: 12px; transition: transform 0.3s; }
+        .week-header.expanded .week-chevron { transform: rotate(90deg); }
+        .week-title { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
+        .week-lock-icon { font-size: 14px; }
+        .week-progress { font-size: 11px; font-weight: bold; color: var(--purple-glow); background: rgba(157, 78, 221, 0.2); padding: 2px 8px; border-radius: 10px; border: 1px solid var(--purple-glow); }
+        .week-progress.all-done { color: var(--green); background: rgba(74, 222, 128, 0.2); border-color: var(--green); }
+        .week-status { font-size: 9px; color: var(--gray-light); }
+        .week-status.unlocks { color: var(--purple-glow); }
+        .week-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: rgba(0,0,0,0.2); border: 1px solid var(--purple-glow); border-top: none; border-radius: 0 0 8px 8px; }
+        .week-content.expanded { max-height: 500px; }
+        .week-content-inner { padding: 8px; }
+
+        /* Quest Item */
+        .quest-item { background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%); border-radius: 8px; padding: 10px; margin-bottom: 8px; border: 1px solid #3a3a4a; display: flex; align-items: center; gap: 10px; position: relative; transition: all 0.3s ease; }
+        .quest-item:last-child { margin-bottom: 0; }
+        .quest-item.exiting { opacity: 0; transform: translateY(20px); }
+        .quest-item.entering { animation: slideIn 0.3s ease forwards; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        .quest-item.claimed-quest { opacity: 0.7; }
+        .quest-info { flex: 1; }
+        .quest-name { font-size: 11px; font-weight: bold; margin-bottom: 6px; text-transform: uppercase; color: rgba(255,255,255,0.9); }
+        .quest-progress-bar { height: 22px; background: rgba(0,0,0,0.5); border-radius: 11px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.1); }
+        .quest-progress-fill { height: 100%; border-radius: 11px; transition: width 0.5s ease; }
+        .quest-item:not(.weekly) .quest-progress-fill { background: linear-gradient(180deg, #4a9eff 0%, #2a7edf 100%); }
+        .quest-item.weekly .quest-progress-fill { background: linear-gradient(180deg, var(--purple-glow) 0%, var(--purple-light) 100%); }
+        .quest-progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        .quest-progress-bar.ready-glow { animation: barGlow 2s ease-in-out infinite; }
+        @keyframes barGlow { 0%, 100% { box-shadow: 0 0 5px var(--purple-glow); } 50% { box-shadow: 0 0 15px var(--purple-glow), 0 0 25px rgba(157, 78, 221, 0.5); } }
+        .quest-reward { width: 44px; height: 44px; background: linear-gradient(135deg, var(--purple-mid), #1a0a2e); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid var(--purple-light); position: relative; flex-shrink: 0; transition: all 0.3s; }
+        .quest-reward.ready-glow { animation: rewardGlow 2s ease-in-out infinite; border-color: var(--gold); }
+        @keyframes rewardGlow { 0%, 100% { box-shadow: 0 0 5px var(--gold); } 50% { box-shadow: 0 0 15px var(--gold), 0 0 25px rgba(255, 215, 0, 0.5); } }
+        .quest-reward-icon { font-size: 18px; }
+        .quest-reward-amount { font-size: 9px; font-weight: bold; color: var(--gold); }
+        .quest-reward-collected { font-size: 7px; font-weight: bold; color: var(--green); text-transform: uppercase; }
+        .quest-reward-lock { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); border: 2px solid var(--gold); border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; z-index: 10; box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.4); animation: lock-glow 2s ease-in-out infinite; }
+        .quest-btn { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; cursor: pointer; border-radius: 11px; transition: all 0.3s; }
+        .quest-btn.claim { background: linear-gradient(180deg, var(--purple-glow) 0%, var(--purple-light) 100%); }
+
+        /* Debug Panel - Right Side */
+        .debug-toggle { position: fixed; right: 0; top: 50%; transform: translateY(-50%); background: rgba(239, 68, 68, 0.9); border: none; border-radius: 8px 0 0 8px; padding: 10px 6px; cursor: pointer; z-index: 1001; font-size: 14px; }
+        .debug-panel { position: fixed; right: -110px; top: 50%; transform: translateY(-50%); width: 100px; background: rgba(0,0,0,0.95); border: 2px solid #ef4444; border-right: none; border-radius: 8px 0 0 8px; padding: 10px 8px; z-index: 1000; transition: right 0.3s ease; }
+        .debug-panel.expanded { right: 0; }
+        .debug-title { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; color: #ef4444; margin-bottom: 8px; text-align: center; }
+        .debug-buttons { display: flex; flex-direction: column; gap: 4px; }
+        .debug-btn { padding: 6px 4px; font-size: 8px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; text-align: center; }
+        .debug-btn:hover { transform: scale(1.05); }
+        .debug-btn.xp { background: var(--purple-glow); color: white; }
+        .debug-btn.quest { background: #3b82f6; color: white; }
+        .debug-btn.reset { background: #ef4444; color: white; }
+        .debug-btn.premium { background: var(--gold); color: black; }
+        .debug-btn.time { background: #10b981; color: white; }
+
+        /* Overlays */
+        .celebration-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; flex-direction: column; }
+        .celebration-overlay.active { display: flex; animation: fade-in 0.5s ease; }
+        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+        .celebration-content { text-align: center; animation: scale-in 0.5s ease 0.3s both; padding: 20px; }
+        @keyframes scale-in { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .celebration-title { font-size: 20px; font-weight: bold; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; text-shadow: 0 0 30px var(--gold); }
+        .celebration-icon { font-size: 100px; margin-bottom: 20px; animation: float 2s ease-in-out infinite; filter: drop-shadow(0 0 40px var(--purple-glow)); }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .celebration-name { font-size: 24px; font-weight: bold; margin-bottom: 10px; background: linear-gradient(135deg, #fff, var(--purple-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .celebration-desc { font-size: 12px; color: var(--gray-light); margin-bottom: 30px; }
+        .celebration-close { padding: 12px 36px; background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%); border: none; border-radius: 8px; font-size: 13px; font-weight: bold; text-transform: uppercase; color: black; cursor: pointer; transition: all 0.3s; }
+        .celebration-close:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--gold); }
+        .particles { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; overflow: hidden; }
+        .particle { position: absolute; width: 10px; height: 10px; border-radius: 50%; animation: particle-fall 3s linear infinite; }
+        @keyframes particle-fall { 0% { transform: translateY(-100px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
+        .cascade-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1500; flex-direction: column; }
+        .cascade-overlay.active { display: flex; }
+        .cascade-title { font-size: 18px; font-weight: bold; color: var(--gold); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        .cascade-rewards { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 280px; }
+        .cascade-reward { width: 50px; height: 50px; background: linear-gradient(135deg, var(--purple-mid), #1a0a2e); border: 2px solid var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; opacity: 0; transform: scale(0); animation: cascade-pop 0.4s ease forwards; }
+        @keyframes cascade-pop { 0% { opacity: 0; transform: scale(0) rotate(-180deg); } 70% { transform: scale(1.2) rotate(10deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
+        .bp-track-scroll::-webkit-scrollbar, .tab-content::-webkit-scrollbar { width: 4px; }
+        .bp-track-scroll::-webkit-scrollbar-track, .tab-content::-webkit-scrollbar-track { background: transparent; }
+        .bp-track-scroll::-webkit-scrollbar-thumb, .tab-content::-webkit-scrollbar-thumb { background: var(--purple-light); border-radius: 2px; }
+
+        /* Premium Modal */
+        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-overlay.active { display: flex; animation: fade-in 0.3s ease; }
+        .modal-content { background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%); border: 2px solid var(--gold); border-radius: 16px; padding: 24px; max-width: 320px; width: 90%; text-align: center; animation: scale-in 0.3s ease; }
+        .modal-icon { font-size: 48px; margin-bottom: 12px; animation: float 2s ease-in-out infinite; }
+        .modal-title { font-size: 20px; font-weight: bold; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        .modal-desc { font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 16px; line-height: 1.4; }
+        .modal-price { font-size: 32px; font-weight: bold; color: var(--gold); margin-bottom: 16px; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+        .modal-benefits { margin-bottom: 20px; }
+        .modal-benefit { font-size: 11px; color: var(--green); margin-bottom: 6px; text-align: left; padding-left: 20px; }
+        .modal-buttons { display: flex; flex-direction: column; gap: 10px; }
+        .modal-btn { padding: 12px 24px; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; }
+        .modal-btn.confirm { background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%); color: #1a0a2e; }
+        .modal-btn.confirm:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+        .modal-btn.cancel { background: transparent; border: 1px solid var(--gray-light); color: var(--gray-light); }
+        .modal-btn.cancel:hover { border-color: white; color: white; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="hero-banner">
+            <div class="hero-particles" id="hero-particles"></div>
+            <div class="hero-title">Season of the Void</div>
+        </div>
+        <div class="xp-bar-container">
+            <div class="level-hexagon">
+                <div class="level-hexagon-bg">
+                    <span class="level-hex-star">★</span>
+                    <span class="level-hex-num" id="current-level">1</span>
+                </div>
+            </div>
+            <div class="xp-bar-wrapper">
+                <div class="xp-bar-track">
+                    <div class="xp-bar-fill" id="xp-progress" style="width: 0%"></div>
+                    <span class="xp-bar-text"><span id="current-xp">0</span>/<span id="xp-needed">200</span></span>
+                </div>
+            </div>
+        </div>
+        <div class="nav-tabs">
+            <div class="nav-tab active" data-tab="battlepass">Battle Pass<span class="tab-badge" id="bp-badge" style="display: none">0</span></div>
+            <div class="nav-tab" data-tab="quests">Quests<span class="tab-badge" id="quest-badge" style="display: none">0</span></div>
+        </div>
+        <div class="main-content">
+            <div class="tab-content active" id="battlepass-tab">
+                <div class="bp-layout">
+                    <div class="bp-left-panel">
+                        <div class="spotlight-section">
+                            <div class="spotlight-header">Reward Spotlight</div>
+                            <div class="grand-reward-card locked" id="grand-reward" onclick="claimGrandReward()">
+                                <div class="grand-unlock-badge">
+                                    <span class="unlock-text">Unlocks at</span>
+                                    <span class="unlock-level">50</span>
+                                </div>
+                                <div class="grand-card-frame">
+                                    <div class="grand-card-art">
+                                        <div class="grand-card-icon">⚔️</div>
+                                    </div>
+                                    <div class="grand-card-name">Void Emperor Armor</div>
+                                    <div class="grand-card-type">Legendary Set</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="premium-section">
+                            <div class="premium-label" id="premium-label">Get Premium!</div>
+                            <button class="premium-button" id="premium-button" onclick="purchasePremium()">
+                                <span class="premium-price" id="premium-price">$10</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bp-right-panel">
+                        <div class="track-header">
+                            <div class="track-header-spacer"></div>
+                            <span class="free-label">Free</span>
+                            <span class="prem-label">Premium</span>
+                        </div>
+                        <div class="bp-track-scroll" id="bp-track-scroll"><div id="bp-track"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content" id="quests-tab">
+                <div class="quest-panel">
+                    <div class="quest-section">
+                        <div class="quest-section-header">
+                            <div class="quest-section-title">Daily Quests</div>
+                            <div class="quest-timer">Resets in <span id="daily-timer">23:59:59</span></div>
+                        </div>
+                        <div id="daily-quests"></div>
+                    </div>
+                    <div class="quest-section">
+                        <div class="quest-section-header">
+                            <div class="quest-section-title">Weekly Quests</div>
+                            <div class="quest-timer">Season Day: <span id="season-day">1</span></div>
+                        </div>
+                        <div class="weekly-accordion" id="weekly-accordion"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="debug-toggle" onclick="toggleDebug()">🔧</button>
+    <div class="debug-panel" id="debug-panel">
+        <div class="debug-title">Debug</div>
+        <div class="debug-buttons">
+            <button class="debug-btn xp" onclick="addXP(100)">+100 XP</button>
+            <button class="debug-btn xp" onclick="addXP(500)">+500 XP</button>
+            <button class="debug-btn xp" onclick="addXP(2000)">+2K XP</button>
+            <button class="debug-btn quest" onclick="completeQuestFrom('daily')">Daily ✓</button>
+            <button class="debug-btn quest" onclick="completeQuestFrom('week1')">W1 ✓</button>
+            <button class="debug-btn quest" onclick="completeQuestFrom('week2')">W2 ✓</button>
+            <button class="debug-btn quest" onclick="completeQuestFrom('week3')">W3 ✓</button>
+            <button class="debug-btn quest" onclick="completeQuestFrom('week4')">W4 ✓</button>
+            <button class="debug-btn premium" onclick="purchasePremium()">Premium</button>
+            <button class="debug-btn time" onclick="advanceWeek()">+7 Days</button>
+            <button class="debug-btn reset" onclick="resetAll()">Reset</button>
+        </div>
+    </div>
+
+    <div class="celebration-overlay" id="celebration">
+        <div class="particles" id="particles"></div>
+        <div class="celebration-content">
+            <div class="celebration-title">🎉 Legendary Unlocked! 🎉</div>
+            <div class="celebration-icon">⚔️</div>
+            <div class="celebration-name">Void Emperor Armor</div>
+            <div class="celebration-desc">You have proven yourself worthy!</div>
+            <button class="celebration-close" onclick="closeCelebration()">Claim & Equip</button>
+        </div>
+    </div>
+    <div class="cascade-overlay" id="cascade">
+        <div class="cascade-title">Premium Unlocked!</div>
+        <div class="cascade-rewards" id="cascade-rewards"></div>
+    </div>
+
+    <div class="modal-overlay" id="premium-modal">
+        <div class="modal-content">
+            <div class="modal-icon">👑</div>
+            <div class="modal-title">Unlock Premium</div>
+            <div class="modal-desc" id="modal-desc">Get access to exclusive rewards and weekly quests!</div>
+            <div class="modal-price">$10</div>
+            <div class="modal-benefits">
+                <div class="modal-benefit">✓ Premium Battle Pass Rewards</div>
+                <div class="modal-benefit">✓ Weekly Quest Rewards</div>
+                <div class="modal-benefit">✓ Exclusive Cosmetics</div>
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn confirm" onclick="confirmPremiumPurchase()">Buy Now</button>
+                <button class="modal-btn cancel" onclick="closePremiumModal()">Maybe Later</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function initHeroParticles() {
+            const container = document.getElementById('hero-particles');
+            for (let i = 0; i < 12; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'hero-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                container.appendChild(particle);
+            }
+        }
+        initHeroParticles();
+
+        const state = {
+            level: 1,
+            xp: 0,
+            hasPremium: false,
+            grandRewardClaimed: false,
+            bpRewards: {},
+            seasonDay: 1,
+            expandedWeek: null,
+            quests: {
+                daily: [],
+                weekly: {
+                    week1: { unlocksOnDay: 1, quests: [] },
+                    week2: { unlocksOnDay: 8, quests: [] },
+                    week3: { unlocksOnDay: 15, quests: [] },
+                    week4: { unlocksOnDay: 22, quests: [] }
+                }
+            }
+        };
+
+        const rewardTypes = {
+            voidDust: { icon: '💜', name: 'Void Dust', quantity: 50, glow: 'purple' },
+            avatar: { icon: '🎭', name: 'Avatar', quantity: 1, glow: 'gold' },
+            silverCoins: { icon: '🪙', name: 'Gold', quantity: 200, glow: 'gold' },
+            chest: { icon: '📦', name: 'Chest', quantity: 1, glow: 'gold' },
+            variants: { icon: '🃏', name: 'Variants', quantity: 3, glow: 'purple' },
+            boost: { icon: '🔮', name: 'Boost', quantity: 1, glow: 'purple' },
+            pets: { icon: '🐉', name: 'Pet Egg', quantity: 1, glow: 'gold' },
+            skills: { icon: '⚡', name: 'Skill Tome', quantity: 1, glow: 'purple' },
+            scrolls: { icon: '📜', name: 'Scrolls', quantity: 5, glow: 'purple' },
+            gems: { icon: '💎', name: 'Gems', quantity: 100, glow: 'cyan' },
+            credits: { icon: '🔷', name: 'Credits', quantity: 100, glow: 'cyan' },
+            boosters: { icon: '⭐', name: 'Boosters', quantity: 15, glow: 'cyan' }
+        };
+
+        const freeRewardPool = ['voidDust', 'silverCoins', 'variants', 'boost', 'scrolls', 'credits'];
+        const premiumRewardPool = ['avatar', 'chest', 'skills', 'gems', 'pets', 'boosters'];
+
+        const dailyQuestTemplates = [
+            { name: 'Complete 5 Dungeons', target: 5 },
+            { name: 'Defeat 100 Enemies', target: 100 },
+            { name: 'Collect 500 Gold', target: 500 },
+            { name: 'Use 3 Skills', target: 3 }
+        ];
+
+        // Unique quest templates per week
+        const weeklyQuestTemplates = {
+            week1: [ // Combat focused
+                { name: 'Defeat 200 Enemies', target: 200 },
+                { name: 'Win 15 Battles', target: 15 },
+                { name: 'Use 50 Skills', target: 50 },
+                { name: 'Deal 10000 Damage', target: 10000 }
+            ],
+            week2: [ // Collection focused
+                { name: 'Collect 5000 Gold', target: 5000 },
+                { name: 'Gather 100 Resources', target: 100 },
+                { name: 'Open 20 Chests', target: 20 },
+                { name: 'Earn 2000 XP', target: 2000 }
+            ],
+            week3: [ // Progression focused
+                { name: 'Complete 30 Dungeons', target: 30 },
+                { name: 'Level Up 5 Heroes', target: 5 },
+                { name: 'Upgrade 10 Items', target: 10 },
+                { name: 'Finish 25 Stages', target: 25 }
+            ],
+            week4: [ // Mastery focused
+                { name: 'Perfect Clear 10 Levels', target: 10 },
+                { name: 'Win 5 Battles in a Row', target: 5 },
+                { name: 'Complete 3 No-Damage Runs', target: 3 },
+                { name: 'Speed Run 8 Dungeons', target: 8 }
+            ]
+        };
+
+        function xpForLevel(level) { return level * 200; }
+
+        function initBPRewards() {
+            for (let i = 1; i <= 50; i++) {
+                state.bpRewards[i] = {
+                    free: { type: freeRewardPool[Math.floor(Math.random() * freeRewardPool.length)], claimed: false },
+                    premium: { type: premiumRewardPool[Math.floor(Math.random() * premiumRewardPool.length)], claimed: false }
+                };
+            }
+        }
+
+        function initQuests() {
+            state.quests.daily = dailyQuestTemplates.map((q, i) => ({
+                id: `daily_${i}`,
+                name: q.name,
+                target: q.target,
+                progress: Math.floor(Math.random() * q.target * 0.5),
+                claimed: false,
+                type: 'daily'
+            }));
+
+            ['week1', 'week2', 'week3', 'week4'].forEach(weekKey => {
+                state.quests.weekly[weekKey].quests = weeklyQuestTemplates[weekKey].map((q, i) => ({
+                    id: `${weekKey}_${i}`,
+                    name: q.name,
+                    target: q.target,
+                    progress: Math.floor(Math.random() * q.target * 0.3),
+                    claimed: false,
+                    type: 'weekly'
+                }));
+            });
+        }
+
+        function isWeekUnlocked(weekKey) {
+            return state.seasonDay >= state.quests.weekly[weekKey].unlocksOnDay;
+        }
+
+        function getUnlockCountdown(weekKey) {
+            const daysLeft = state.quests.weekly[weekKey].unlocksOnDay - state.seasonDay;
+            if (daysLeft <= 0) return null;
+            const days = Math.floor(daysLeft);
+            const hours = Math.floor((daysLeft - days) * 24);
+            if (days > 0) return `${days}d ${hours}h`;
+            return `${hours}h`;
+        }
+
+        function hasUnclaimedQuests(weekKey) {
+            return state.quests.weekly[weekKey].quests.some(q => !q.claimed);
+        }
+
+        function isWeekComplete(weekKey) {
+            return state.quests.weekly[weekKey].quests.every(q => q.claimed);
+        }
+
+        function getWeekToExpand() {
+            const weeks = ['week1', 'week2', 'week3', 'week4'];
+            
+            // Find first unlocked week with unclaimed quests
+            for (const week of weeks) {
+                if (isWeekUnlocked(week) && hasUnclaimedQuests(week)) {
+                    return week;
+                }
+            }
+            
+            // All unlocked weeks complete - show latest unlocked week
+            for (let i = weeks.length - 1; i >= 0; i--) {
+                if (isWeekUnlocked(weeks[i])) {
+                    return weeks[i];
+                }
+            }
+            
+            return 'week1';
+        }
+
+        function toggleWeek(weekKey) {
+            if (!isWeekUnlocked(weekKey)) return;
+            
+            if (state.expandedWeek === weekKey) {
+                // Optionally close if clicking same week - but let's keep it open
+                return;
+            }
+            
+            state.expandedWeek = weekKey;
+            renderWeeklyAccordion();
+        }
+
+        function renderBPTrack() {
+            const track = document.getElementById('bp-track');
+            track.innerHTML = '';
+            for (let level = 1; level <= 50; level++) {
+                const rewards = state.bpRewards[level];
+                const isUnlocked = state.level >= level;
+                const isCurrent = state.level === level;
+                const isCompleted = state.level > level;
+                const freeClaimable = isUnlocked && !rewards.free.claimed;
+                const premiumClaimable = isUnlocked && state.hasPremium && !rewards.premium.claimed;
+                const freeReward = rewardTypes[rewards.free.type];
+                const premiumReward = rewardTypes[rewards.premium.type];
+
+                let hexState = 'locked';
+                if (isCurrent) hexState = 'current';
+                else if (isCompleted) hexState = 'completed';
+
+                const levelDiv = document.createElement('div');
+                levelDiv.className = `bp-level ${isCurrent ? 'current-level-row' : ''}`;
+                levelDiv.id = `bp-level-${level}`;
+
+                const showPremiumLock = !state.hasPremium && !rewards.premium.claimed;
+
+                levelDiv.innerHTML = `
+                    <div class="level-hex ${hexState}">
+                        <div class="level-hex-inner">
+                            <span class="level-hex-star">★</span>
+                            <span class="level-hex-number">${level}</span>
+                        </div>
+                    </div>
+                    <div class="reward-slot free glow-${freeReward.glow} ${!isUnlocked ? 'locked' : ''} ${freeClaimable ? 'claimable' : ''} ${rewards.free.claimed ? 'claimed' : ''}" onclick="claimReward(${level}, 'free')">
+                        <div class="reward-icon">${freeReward.icon}</div>
+                        <div class="reward-label">${rewards.free.claimed ? 'CLAIMED' : freeReward.quantity + ' ' + freeReward.name}</div>
+                        ${rewards.free.claimed ? '<div class="claimed-check">✓</div>' : ''}
+                    </div>
+                    <div class="reward-slot premium glow-${premiumReward.glow} ${!isUnlocked ? 'locked' : ''} ${!state.hasPremium ? 'locked-premium' : ''} ${premiumClaimable ? 'claimable' : ''} ${rewards.premium.claimed ? 'claimed' : ''}" onclick="claimReward(${level}, 'premium')">
+                        ${showPremiumLock ? '<div class="reward-lock">🔒</div>' : ''}
+                        <div class="reward-icon">${premiumReward.icon}</div>
+                        <div class="reward-label">${rewards.premium.claimed ? 'CLAIMED' : premiumReward.quantity + ' ' + premiumReward.name}</div>
+                        ${rewards.premium.claimed ? '<div class="claimed-check">✓</div>' : ''}
+                    </div>`;
+                track.appendChild(levelDiv);
+            }
+            updateGrandReward();
+            setTimeout(() => {
+                const el = document.getElementById(`bp-level-${state.level}`);
+                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+
+        function renderQuests() {
+            renderDailyQuests();
+            renderWeeklyAccordion();
+            document.getElementById('season-day').textContent = state.seasonDay;
+        }
+
+        function renderDailyQuests() {
+            const container = document.getElementById('daily-quests');
+            container.innerHTML = '';
+            
+            const sortedQuests = sortQuests(state.quests.daily);
+            
+            sortedQuests.forEach(quest => {
+                container.appendChild(createQuestElement(quest, 'daily'));
+            });
+        }
+
+        function renderWeeklyAccordion() {
+            const container = document.getElementById('weekly-accordion');
+            container.innerHTML = '';
+            
+            // Auto-determine which week to expand if not set
+            if (!state.expandedWeek) {
+                state.expandedWeek = getWeekToExpand();
+            }
+
+            ['week1', 'week2', 'week3', 'week4'].forEach((weekKey, index) => {
+                const weekNum = index + 1;
+                const unlocked = isWeekUnlocked(weekKey);
+                const expanded = state.expandedWeek === weekKey;
+                const complete = unlocked && isWeekComplete(weekKey);
+                const countdown = getUnlockCountdown(weekKey);
+                
+                // Count quest stats
+                const quests = state.quests.weekly[weekKey].quests;
+                const totalQuests = quests.length;
+                const completedQuests = quests.filter(q => q.progress >= q.target).length;
+                const hasReadyToClaim = quests.some(q => q.progress >= q.target && !q.claimed);
+
+                // Week Header
+                const header = document.createElement('div');
+                header.className = `week-header ${expanded ? 'expanded' : ''} ${!unlocked ? 'locked' : ''} ${complete ? 'completed' : ''} ${hasReadyToClaim && !complete ? 'has-claimable' : ''}`;
+                header.onclick = () => toggleWeek(weekKey);
+
+                let statusText = '';
+                let progressHTML = '';
+                
+                if (!unlocked) {
+                    statusText = `Unlocks in ${countdown}`;
+                } else {
+                    progressHTML = `<span class="week-progress ${completedQuests === totalQuests ? 'all-done' : ''}">${completedQuests}/${totalQuests}</span>`;
+                    if (complete) {
+                        statusText = '✓ Complete';
+                    }
+                }
+
+                header.innerHTML = `
+                    <div class="week-header-left">
+                        <span class="week-chevron">${unlocked ? '▶' : ''}</span>
+                        <span class="week-title">${complete ? '✓ ' : ''}Week ${weekNum}</span>
+                        ${!unlocked ? '<span class="week-lock-icon">🔒</span>' : ''}
+                        ${progressHTML}
+                    </div>
+                    <span class="week-status ${!unlocked ? 'unlocks' : ''}">${statusText}</span>
+                `;
+                container.appendChild(header);
+
+                // Week Content
+                const content = document.createElement('div');
+                content.className = `week-content ${expanded ? 'expanded' : ''}`;
+                
+                const inner = document.createElement('div');
+                inner.className = 'week-content-inner';
+
+                if (unlocked) {
+                    const sortedQuests = sortQuests(state.quests.weekly[weekKey].quests);
+                    sortedQuests.forEach(quest => {
+                        inner.appendChild(createQuestElement(quest, weekKey));
+                    });
+                }
+
+                content.appendChild(inner);
+                container.appendChild(content);
+            });
+        }
+
+        function createQuestElement(quest, weekKey) {
+            const isComplete = quest.progress >= quest.target;
+            const isWeeklyQuest = quest.type === 'weekly';
+            const canClaim = isComplete && !quest.claimed && (!isWeeklyQuest || state.hasPremium);
+            const isLockedWeekly = isWeeklyQuest && !state.hasPremium && isComplete && !quest.claimed;
+            const progressPercent = Math.min(100, (quest.progress / quest.target) * 100);
+            
+            const questDiv = document.createElement('div');
+            questDiv.className = `quest-item ${quest.type} ${quest.claimed ? 'claimed-quest' : ''} ${isLockedWeekly ? 'locked-weekly' : ''}`;
+            questDiv.id = `quest-${quest.id}`;
+            
+            // Add click handler for locked weekly quests
+            if (isLockedWeekly) {
+                questDiv.onclick = () => showPremiumModal('Unlock Premium to claim your weekly quest rewards!');
+                questDiv.style.cursor = 'pointer';
+            }
+            
+            let buttonHTML = '';
+            if (canClaim && !isLockedWeekly) {
+                buttonHTML = `<div class="quest-btn claim" onclick="claimQuest('${quest.id}', '${weekKey}')">Claim</div>`;
+            }
+            
+            let rewardContent = '';
+            if (quest.claimed) {
+                rewardContent = `
+                    <div class="quest-reward-icon">✨</div>
+                    <div class="quest-reward-collected">Collected</div>
+                `;
+            } else if (isLockedWeekly) {
+                rewardContent = `
+                    <div class="quest-reward-lock">🔒</div>
+                    <div class="quest-reward-icon">✨</div>
+                    <div class="quest-reward-amount">+100 XP</div>
+                `;
+            } else {
+                rewardContent = `
+                    <div class="quest-reward-icon">✨</div>
+                    <div class="quest-reward-amount">+100 XP</div>
+                `;
+            }
+            
+            const barGlowClass = isLockedWeekly ? 'ready-glow' : '';
+            const rewardGlowClass = isLockedWeekly ? 'ready-glow' : '';
+            
+            questDiv.innerHTML = `
+                <div class="quest-info">
+                    <div class="quest-name">${quest.name}</div>
+                    <div class="quest-progress-bar ${barGlowClass}">
+                        <div class="quest-progress-fill" style="width: ${progressPercent}%"></div>
+                        <div class="quest-progress-text">${quest.progress}/${quest.target}</div>
+                        ${buttonHTML}
+                    </div>
+                </div>
+                <div class="quest-reward ${rewardGlowClass}">
+                    ${rewardContent}
+                </div>
+            `;
+            
+            return questDiv;
+        }
+
+        function sortQuests(quests) {
+            return [...quests].sort((a, b) => {
+                if (a.claimed && !b.claimed) return 1;
+                if (!a.claimed && b.claimed) return -1;
+                return 0;
+            });
+        }
+
+        function claimReward(level, track) {
+            const rewards = state.bpRewards[level];
+            const reward = rewards[track];
+            if (state.level < level) return;
+            if (track === 'premium' && !state.hasPremium) return;
+            if (reward.claimed) return;
+            reward.claimed = true;
+            renderBPTrack();
+            updateBadges();
+        }
+
+        function claimQuest(questId, weekKey) {
+            let quest;
+            
+            if (weekKey === 'daily') {
+                quest = state.quests.daily.find(q => q.id === questId);
+            } else {
+                quest = state.quests.weekly[weekKey].quests.find(q => q.id === questId);
+            }
+            
+            if (!quest || quest.claimed) return;
+            if (quest.progress < quest.target) return;
+            if (quest.type === 'weekly' && !state.hasPremium) return;
+            
+            const questEl = document.getElementById(`quest-${questId}`);
+            if (questEl) {
+                questEl.classList.add('exiting');
+            }
+            
+            setTimeout(() => {
+                quest.claimed = true;
+                addXP(100, true);
+                
+                // Check if we need to auto-expand a different week
+                if (weekKey !== 'daily') {
+                    state.expandedWeek = getWeekToExpand();
+                }
+                
+                renderQuests();
+                updateBadges();
+            }, 300);
+        }
+
+        function updateGrandReward() {
+            const grandReward = document.getElementById('grand-reward');
+            const unlockBadge = document.querySelector('.grand-unlock-badge');
+            grandReward.classList.remove('locked', 'claimable', 'claimed');
+            if (state.grandRewardClaimed) {
+                grandReward.classList.add('claimed');
+                unlockBadge.innerHTML = '<span class="unlock-text">✓ Claimed!</span>';
+            } else if (state.level >= 50) {
+                grandReward.classList.add('claimable');
+                unlockBadge.innerHTML = '<span class="unlock-text">Tap to Claim!</span>';
+            } else {
+                grandReward.classList.add('locked');
+                unlockBadge.innerHTML = '<span class="unlock-text">Unlocks at</span><span class="unlock-level">50</span>';
+            }
+        }
+
+        function claimGrandReward() {
+            if (state.level < 50 || state.grandRewardClaimed) return;
+            state.grandRewardClaimed = true;
+            showCelebration();
+            updateGrandReward();
+        }
+
+        function showCelebration() {
+            const overlay = document.getElementById('celebration');
+            const particles = document.getElementById('particles');
+            particles.innerHTML = '';
+            const colors = ['#ffd700', '#9d4edd', '#4ade80', '#60a5fa', '#f472b6'];
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                particle.style.animationDuration = (2 + Math.random() * 2) + 's';
+                particles.appendChild(particle);
+            }
+            overlay.classList.add('active');
+        }
+
+        function closeCelebration() {
+            document.getElementById('celebration').classList.remove('active');
+        }
+
+        function purchasePremium() {
+            if (state.hasPremium) return;
+            showPremiumModal('Get access to exclusive rewards and weekly quests!');
+        }
+
+        function showPremiumModal(message) {
+            document.getElementById('modal-desc').textContent = message;
+            document.getElementById('premium-modal').classList.add('active');
+        }
+
+        function closePremiumModal() {
+            document.getElementById('premium-modal').classList.remove('active');
+        }
+
+        function confirmPremiumPurchase() {
+            closePremiumModal();
+            state.hasPremium = true;
+            document.getElementById('premium-button').classList.add('owned');
+            document.getElementById('premium-label').textContent = '✓ Premium Active';
+            document.getElementById('premium-price').textContent = 'Owned';
+            showPremiumCascade();
+        }
+
+        function showPremiumCascade() {
+            const overlay = document.getElementById('cascade');
+            const rewardsContainer = document.getElementById('cascade-rewards');
+            rewardsContainer.innerHTML = '';
+            const unlockedPremium = [];
+            for (let level = 1; level <= state.level; level++) {
+                if (!state.bpRewards[level].premium.claimed) {
+                    unlockedPremium.push(state.bpRewards[level].premium.type);
+                }
+            }
+            if (unlockedPremium.length === 0) {
+                renderBPTrack();
+                renderQuests();
+                updateBadges();
+                return;
+            }
+            overlay.classList.add('active');
+            unlockedPremium.forEach((type, index) => {
+                setTimeout(() => {
+                    const rewardDiv = document.createElement('div');
+                    rewardDiv.className = 'cascade-reward';
+                    rewardDiv.innerHTML = rewardTypes[type].icon;
+                    rewardsContainer.appendChild(rewardDiv);
+                }, index * 150);
+            });
+            setTimeout(() => {
+                overlay.classList.remove('active');
+                renderBPTrack();
+                renderQuests();
+                updateBadges();
+            }, unlockedPremium.length * 150 + 1500);
+        }
+
+        function addXP(amount, silent = false) {
+            state.xp += amount;
+            let levelsGained = 0;
+            while (state.xp >= xpForLevel(state.level) && state.level < 50) {
+                state.xp -= xpForLevel(state.level);
+                state.level++;
+                levelsGained++;
+            }
+            if (state.level >= 50) {
+                state.level = 50;
+                state.xp = Math.min(state.xp, xpForLevel(50));
+            }
+            updateHeader();
+            renderBPTrack();
+            updateBadges();
+        }
+
+        function updateHeader() {
+            document.getElementById('current-level').textContent = state.level;
+            document.getElementById('current-xp').textContent = state.xp;
+            document.getElementById('xp-needed').textContent = xpForLevel(state.level);
+            document.getElementById('xp-progress').style.width = (state.xp / xpForLevel(state.level)) * 100 + '%';
+        }
+
+        function updateBadges() {
+            let bpClaimable = 0;
+            for (let level = 1; level <= state.level; level++) {
+                const rewards = state.bpRewards[level];
+                if (!rewards.free.claimed) bpClaimable++;
+                if (state.hasPremium && !rewards.premium.claimed) bpClaimable++;
+            }
+            if (state.level >= 50 && !state.grandRewardClaimed) bpClaimable++;
+            const bpBadge = document.getElementById('bp-badge');
+            bpBadge.style.display = bpClaimable > 0 ? 'block' : 'none';
+            bpBadge.textContent = bpClaimable;
+
+            let questClaimable = 0;
+            state.quests.daily.forEach(q => {
+                if (q.progress >= q.target && !q.claimed) questClaimable++;
+            });
+            if (state.hasPremium) {
+                ['week1', 'week2', 'week3', 'week4'].forEach(weekKey => {
+                    if (isWeekUnlocked(weekKey)) {
+                        state.quests.weekly[weekKey].quests.forEach(q => {
+                            if (q.progress >= q.target && !q.claimed) questClaimable++;
+                        });
+                    }
+                });
+            }
+            const questBadge = document.getElementById('quest-badge');
+            questBadge.style.display = questClaimable > 0 ? 'block' : 'none';
+            questBadge.textContent = questClaimable;
+        }
+
+        function completeQuestFrom(source) {
+            let incompleteQuests = [];
+            
+            if (source === 'daily') {
+                incompleteQuests = state.quests.daily.filter(q => q.progress < q.target);
+            } else {
+                // week1, week2, week3, week4
+                if (isWeekUnlocked(source)) {
+                    incompleteQuests = state.quests.weekly[source].quests.filter(q => q.progress < q.target);
+                }
+            }
+            
+            if (incompleteQuests.length === 0) return;
+            
+            const quest = incompleteQuests[Math.floor(Math.random() * incompleteQuests.length)];
+            quest.progress = quest.target;
+            renderQuests();
+            updateBadges();
+        }
+
+        function advanceWeek() {
+            state.seasonDay += 7;
+            state.expandedWeek = getWeekToExpand();
+            renderQuests();
+            updateBadges();
+        }
+
+        function toggleDebug() {
+            document.getElementById('debug-panel').classList.toggle('expanded');
+        }
+
+        function resetAll() {
+            state.level = 1;
+            state.xp = 0;
+            state.hasPremium = false;
+            state.grandRewardClaimed = false;
+            state.seasonDay = 1;
+            state.expandedWeek = null;
+            document.getElementById('premium-button').classList.remove('owned');
+            document.getElementById('premium-label').textContent = 'Get Premium!';
+            document.getElementById('premium-price').textContent = '$10';
+            initBPRewards();
+            initQuests();
+            updateHeader();
+            renderBPTrack();
+            renderQuests();
+            updateBadges();
+        }
+
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab + '-tab').classList.add('active');
+            });
+        });
+
+        function init() {
+            initBPRewards();
+            initQuests();
+            updateHeader();
+            renderBPTrack();
+            renderQuests();
+            updateBadges();
+        }
+        init();
+    </script>
+</body>
+</html>
