@@ -1,361 +1,2568 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Season of the Void - Battle Pass</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        :root {
-            --purple-dark: #1a0a2e; --purple-mid: #2d1b4e; --purple-light: #6b3fa0; --purple-glow: #9d4edd;
-            --gold: #ffd700; --gold-dark: #b8960b; --green: #4ade80; --green-dark: #22c55e;
-            --gray: #374151; --gray-light: #6b7280; --chain-color: #4a4a5a;
-            --cyan-glow: #22d3ee; --blue-glow: #3b82f6; --red: #ef4444;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
-        html, body { height: 100%; overflow: hidden; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--purple-dark); color: white; }
-        .app-container { width: 100%; height: 100%; max-width: 430px; margin: 0 auto; background: linear-gradient(180deg, #1a0a2e 0%, #0d0618 100%); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+
+        :root {
+            --purple-dark: #1a0a2e;
+            --purple-mid: #2d1b4e;
+            --purple-light: #6b3fa0;
+            --purple-glow: #9d4edd;
+            --gold: #ffd700;
+            --gold-dark: #b8960b;
+            --green: #4ade80;
+            --green-dark: #22c55e;
+            --gray: #374151;
+            --gray-light: #6b7280;
+            --chain-color: #4a4a5a;
+            --cyan-glow: #22d3ee;
+            --blue-glow: #3b82f6;
+            --red: #ef4444;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--purple-dark);
+            color: white;
+        }
+
+        .app-container {
+            width: 100%;
+            height: 100%;
+            max-width: 430px;
+            margin: 0 auto;
+            background: linear-gradient(180deg, #1a0a2e 0%, #0d0618 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
 
         /* Hero Banner */
-        .hero-banner { height: 100px; background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; border-bottom: 2px solid var(--purple-light); }
-        .hero-banner::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at center, rgba(157, 78, 221, 0.3) 0%, transparent 50%); animation: pulse-bg 4s ease-in-out infinite; }
-        @keyframes pulse-bg { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.8; } }
-        .hero-particles { position: absolute; top: 0; left: 0; right: 0; bottom: 0; overflow: hidden; pointer-events: none; }
-        .hero-particle { position: absolute; width: 4px; height: 4px; background: var(--purple-glow); border-radius: 50%; opacity: 0.6; animation: float-particle 3s ease-in-out infinite; }
-        @keyframes float-particle { 0%, 100% { transform: translateY(0) scale(1); opacity: 0.6; } 50% { transform: translateY(-20px) scale(1.5); opacity: 1; } }
-        .hero-title { font-size: 22px; font-weight: bold; text-transform: uppercase; letter-spacing: 4px; text-align: center; z-index: 1; background: linear-gradient(180deg, #fff 0%, #c9a0ff 50%, #9d4edd 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+        .hero-banner {
+            height: 100px;
+            background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid var(--purple-light);
+        }
+
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(157, 78, 221, 0.3) 0%, transparent 50%);
+            animation: pulse-bg 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse-bg {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .hero-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--purple-glow);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float-particle 3s ease-in-out infinite;
+        }
+
+        @keyframes float-particle {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.6;
+            }
+
+            50% {
+                transform: translateY(-20px) scale(1.5);
+                opacity: 1;
+            }
+        }
+
+        .hero-title {
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            text-align: center;
+            z-index: 1;
+            background: linear-gradient(180deg, #fff 0%, #c9a0ff 50%, #9d4edd 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
 
         /* XP Progress Bar */
-        .xp-bar-container { display: flex; align-items: center; padding: 8px 12px; background: rgba(0,0,0,0.3); gap: 10px; }
-        .level-display { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
-        .level-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--purple-glow); margin-bottom: 2px; font-weight: bold; }
-        .level-hexagon { width: 52px; height: 58px; position: relative; }
-        .level-hexagon-bg { width: 100%; height: 100%; background: linear-gradient(180deg, #6b3fa0 0%, #4a2875 100%); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; box-shadow: 0 0 15px var(--purple-glow); }
-        .level-hexagon-bg::before { content: ''; position: absolute; inset: 3px; background: linear-gradient(180deg, #5a2d82 0%, #3d1b5c 100%); clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); }
-        .level-hex-star { font-size: 12px; color: var(--gold); z-index: 1; margin-bottom: -2px; }
-        .level-hex-num { font-size: 22px; font-weight: bold; z-index: 1; }
-        .xp-bar-wrapper { flex: 1; }
-        .xp-bar-track { height: 18px; background: rgba(0,0,0,0.5); border-radius: 9px; overflow: hidden; position: relative; border: 1px solid var(--purple-mid); }
-        .xp-bar-fill { height: 100%; background: linear-gradient(90deg, var(--purple-light), var(--purple-glow), #c77dff); border-radius: 9px; transition: width 0.5s ease; }
-        .xp-bar-text { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); font-size: 10px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
-        .season-timer { font-size: 11px; color: rgba(255,255,255,0.7); text-align: center; margin-top: 12px; font-weight: 500; }
+        .xp-bar-container {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.3);
+            gap: 10px;
+        }
+
+        .level-display {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .level-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--purple-glow);
+            margin-bottom: 2px;
+            font-weight: bold;
+        }
+
+        .level-hexagon {
+            width: 52px;
+            height: 58px;
+            position: relative;
+        }
+
+        .level-hexagon-bg {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, #6b3fa0 0%, #4a2875 100%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            box-shadow: 0 0 15px var(--purple-glow);
+        }
+
+        .level-hexagon-bg::before {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: linear-gradient(180deg, #5a2d82 0%, #3d1b5c 100%);
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+
+        .level-hex-star {
+            font-size: 12px;
+            color: var(--gold);
+            z-index: 1;
+            margin-bottom: -2px;
+        }
+
+        .level-hex-num {
+            font-size: 22px;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .xp-bar-wrapper {
+            flex: 1;
+        }
+
+        .xp-bar-track {
+            height: 18px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 9px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--purple-mid);
+        }
+
+        .xp-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple-light), var(--purple-glow), #c77dff);
+            border-radius: 9px;
+            transition: width 0.5s ease;
+        }
+
+        .xp-bar-text {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 10px;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
+        .season-timer {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-top: 12px;
+            font-weight: 500;
+        }
 
         /* Navigation */
-        .nav-tabs { display: flex; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--purple-mid); }
-        .nav-tab { flex: 1; padding: 10px 8px; text-align: center; font-size: 11px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; border-bottom: 3px solid transparent; position: relative; }
-        .nav-tab.active { background: rgba(157, 78, 221, 0.2); border-bottom-color: var(--purple-glow); }
-        
-        /* Red Dot Indicator - Synced animation */
-        .red-dot, .week-red-dot { animation: red-dot-pulse 1.5s ease-in-out infinite; }
-        .red-dot { position: absolute; top: 6px; right: 12px; width: 10px; height: 10px; background: var(--red); border-radius: 50%; }
-        .week-red-dot { position: absolute; top: 50%; right: 10px; transform: translateY(-50%); width: 8px; height: 8px; background: var(--red); border-radius: 50%; }
-        @keyframes red-dot-pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 5px var(--red); }
-            50% { transform: scale(1.2); box-shadow: 0 0 12px var(--red), 0 0 20px rgba(239, 68, 68, 0.5); }
+        .nav-tabs {
+            display: flex;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--purple-mid);
         }
+
+        .nav-tab {
+            flex: 1;
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            position: relative;
+        }
+
+        .nav-tab.active {
+            background: rgba(157, 78, 221, 0.2);
+            border-bottom-color: var(--purple-glow);
+        }
+
+        /* Red Dot Indicator - Synced animation */
+        .red-dot,
+        .week-red-dot {
+            animation: red-dot-pulse 1.5s ease-in-out infinite;
+        }
+
+        .red-dot {
+            position: absolute;
+            top: 6px;
+            right: 12px;
+            width: 10px;
+            height: 10px;
+            background: var(--red);
+            border-radius: 50%;
+        }
+
+        .week-red-dot {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            width: 8px;
+            height: 8px;
+            background: var(--red);
+            border-radius: 50%;
+        }
+
+        @keyframes red-dot-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 5px var(--red);
+            }
+
+            50% {
+                transform: scale(1.2);
+                box-shadow: 0 0 12px var(--red), 0 0 20px rgba(239, 68, 68, 0.5);
+            }
+        }
+
         .week-red-dot {
             animation: red-dot-pulse-week 1.5s ease-in-out infinite;
         }
+
         @keyframes red-dot-pulse-week {
-            0%, 100% { transform: translateY(-50%) scale(1); box-shadow: 0 0 5px var(--red); }
-            50% { transform: translateY(-50%) scale(1.2); box-shadow: 0 0 12px var(--red), 0 0 20px rgba(239, 68, 68, 0.5); }
+
+            0%,
+            100% {
+                transform: translateY(-50%) scale(1);
+                box-shadow: 0 0 5px var(--red);
+            }
+
+            50% {
+                transform: translateY(-50%) scale(1.2);
+                box-shadow: 0 0 12px var(--red), 0 0 20px rgba(239, 68, 68, 0.5);
+            }
         }
 
         /* Main Content */
-        .main-content { flex: 1; overflow: hidden; position: relative; }
-        .tab-content { display: none; height: 100%; overflow-y: auto; padding-bottom: 20px; }
-        .tab-content.active { display: block; }
+        .main-content {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .tab-content {
+            display: none;
+            height: 100%;
+            overflow-y: auto;
+            padding-bottom: 20px;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
 
         /* Battle Pass Layout */
-        .bp-layout { display: flex; height: 100%; overflow: hidden; }
-        .bp-left-panel { width: 38%; background: linear-gradient(180deg, rgba(26, 10, 46, 0.9) 0%, rgba(13, 6, 24, 0.95) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px 8px; border-right: 1px solid var(--purple-mid); position: relative; overflow: hidden; }
-        .spotlight-section { display: flex; flex-direction: column; justify-content: center; padding-top: 10px; }
-        .spotlight-header { font-size: 9px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.7); text-align: center; margin-bottom: 8px; text-shadow: 0 0 10px var(--purple-glow); }
-        .grand-reward-card { position: relative; z-index: 1; background: linear-gradient(180deg, #2a1a4a 0%, #1a0a2e 100%); border: 2px solid #8b5cf6; border-radius: 8px; padding: 6px; cursor: pointer; margin-bottom: 0; }
-        .grand-reward-card::before { content: ''; position: absolute; inset: -2px; background: linear-gradient(135deg, #c9a227, #f4d03f, #c9a227); border-radius: 10px; z-index: -1; opacity: 0.6; }
-        .grand-unlock-badge { background: linear-gradient(90deg, #7c3aed, #a855f7); color: white; font-size: 8px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 4px 10px; border-radius: 4px; text-align: center; margin-bottom: 6px; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .grand-unlock-badge .unlock-text { opacity: 0.8; }
-        .grand-unlock-badge .unlock-level { font-size: 12px; }
-        .grand-card-frame { background: linear-gradient(180deg, #3d2066 0%, #2a1248 100%); border: 2px solid #a855f7; border-radius: 6px; padding: 8px; position: relative; overflow: hidden; }
-        .grand-card-art { width: 100%; aspect-ratio: 0.85; background: radial-gradient(circle at center, #6b3fa0 0%, #2d1b4e 60%, #1a0a2e 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px; }
-        .grand-card-icon { font-size: 50px; filter: drop-shadow(0 0 20px var(--purple-glow)); animation: float-armor 3s ease-in-out infinite; }
-        @keyframes float-armor { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-        .grand-card-name { font-size: 11px; font-weight: bold; text-align: center; margin-bottom: 2px; }
-        .grand-card-type { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; text-align: center; color: var(--gold); opacity: 0.9; }
-        .grand-reward-card.locked .grand-card-icon { filter: grayscale(0.5) brightness(0.7) drop-shadow(0 0 10px var(--purple-glow)); }
-        .grand-reward-card.claimable { animation: glow-card 2s ease-in-out infinite; }
-        .grand-reward-card.claimable .grand-unlock-badge { background: linear-gradient(90deg, #16a34a, #22c55e); }
-        @keyframes glow-card { 0%, 100% { box-shadow: 0 0 10px #f4d03f; } 50% { box-shadow: 0 0 25px #f4d03f, 0 0 40px rgba(244, 208, 63, 0.5); } }
-        .premium-section { text-align: center; margin-top: 10px; }
-        .premium-button { width: 100%; background: linear-gradient(180deg, #f4d03f 0%, #c9a227 50%, #a67c00 100%); border: none; border-radius: 20px; padding: 12px 16px; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 15px rgba(244, 208, 63, 0.3); font-size: 14px; font-weight: bold; color: #1a0a2e; text-transform: uppercase; letter-spacing: 1px; }
-        .premium-button:hover { transform: scale(1.02); box-shadow: 0 6px 20px rgba(244, 208, 63, 0.5); }
-        .premium-button.owned { background: linear-gradient(180deg, #2d4a2d 0%, #1a3a1a 100%); border: 2px solid var(--green); cursor: default; padding: 10px 16px; }
-        .premium-button.owned:hover { transform: none; box-shadow: 0 4px 15px rgba(74, 222, 128, 0.2); }
-        .premium-button-content { display: flex; flex-direction: column; align-items: center; gap: 2px; }
-        .premium-status { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--green); }
-        .premium-status-icon { font-size: 14px; }
-        .premium-expires { font-size: 9px; color: rgba(255,255,255,0.6); text-transform: none; letter-spacing: 0.5px; font-weight: normal; }
+        .bp-layout {
+            display: flex;
+            height: 100%;
+            overflow: hidden;
+        }
 
-        .bp-right-panel { flex: 1; display: flex; flex-direction: column; background: linear-gradient(180deg, rgba(45, 27, 78, 0.3) 0%, rgba(26, 10, 46, 0.5) 100%); overflow: hidden; }
-        .track-header { display: grid; grid-template-columns: 40px 1fr 1fr; padding: 8px 6px; background: rgba(0,0,0,0.3); border-bottom: 1px solid var(--purple-mid); gap: 4px; }
-        .track-header span { font-size: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; text-align: center; }
-        .track-header .free-label { color: var(--purple-glow); }
-        .track-header .prem-label { color: var(--gold); }
-        .bp-track-scroll { flex: 1; overflow-y: auto; padding: 6px; }
+        .bp-left-panel {
+            width: 38%;
+            background: linear-gradient(180deg, rgba(26, 10, 46, 0.9) 0%, rgba(13, 6, 24, 0.95) 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 8px;
+            border-right: 1px solid var(--purple-mid);
+            position: relative;
+            overflow: hidden;
+        }
 
-        .bp-level { display: grid; grid-template-columns: 40px 1fr 1fr; gap: 4px; margin-bottom: 6px; padding: 4px; background: rgba(0,0,0,0.2); border-radius: 8px; border: 1px solid transparent; transition: all 0.3s; align-items: center; }
-        .bp-level.current-level-row { border-color: var(--purple-glow); background: rgba(157, 78, 221, 0.15); box-shadow: 0 0 10px rgba(157, 78, 221, 0.3); padding: 6px; }
-        .level-hex { width: 28px; height: 32px; position: relative; justify-self: center; }
-        .level-hex-inner { width: 100%; height: 100%; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s; }
-        .level-hex.locked .level-hex-inner { background: linear-gradient(180deg, #4a4a6a 0%, #2a2a4a 100%); }
-        .level-hex.current .level-hex-inner { background: linear-gradient(180deg, #a855f7 0%, #7c3aed 100%); box-shadow: 0 0 15px var(--purple-glow); }
-        .level-hex.completed .level-hex-inner { background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%); }
-        .level-hex-star { font-size: 6px; color: var(--gold); margin-bottom: -2px; }
-        .level-hex-number { font-size: 10px; font-weight: bold; }
-        .bp-level.current-level-row .level-hex { width: 40px; height: 45px; }
-        .bp-level.current-level-row .level-hex-star { font-size: 9px; }
-        .bp-level.current-level-row .level-hex-number { font-size: 15px; }
-        .bp-level.current-level-row .reward-icon { font-size: 44px; }
-        .bp-level.current-level-row .reward-slot { min-height: 75px; }
-        .bp-level.current-level-row .reward-label { font-size: 7px; }
+        .spotlight-section {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-top: 10px;
+        }
 
-        .reward-slot { aspect-ratio: 1; border-radius: 6px; position: relative; cursor: pointer; transition: all 0.3s; overflow: visible; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2px; min-height: 50px; }
-        .reward-slot.free { background: linear-gradient(180deg, #4a3a6a 0%, #2d1b4e 100%); border: 2px solid #6b4a8a; }
-        .reward-slot.premium { background: linear-gradient(180deg, #5a4a2a 0%, #3d2a1a 100%); border: 2px solid #8a6a2a; }
-        .reward-slot.locked { opacity: 0.5; }
-        .reward-slot.claimable { border-color: var(--gold); animation: pulse-slot 2s infinite; }
-        @keyframes pulse-slot { 0%, 100% { box-shadow: 0 0 5px var(--gold); } 50% { box-shadow: 0 0 15px var(--gold), 0 0 25px rgba(255, 215, 0, 0.5); } }
-        .reward-slot.claimed { opacity: 0.5; }
-        .reward-lock { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); border: 2px solid var(--gold); border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; z-index: 10; box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.4); animation: lock-glow 2s ease-in-out infinite; }
-        @keyframes lock-glow { 0%, 100% { box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.4); } 50% { box-shadow: 0 0 15px var(--gold), 0 0 30px rgba(255, 215, 0, 0.6); } }
-        .reward-icon { font-size: 30px; margin-bottom: 1px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
-        .reward-slot.glow-cyan .reward-icon { filter: drop-shadow(0 0 8px var(--cyan-glow)); }
-        .reward-slot.glow-purple .reward-icon { filter: drop-shadow(0 0 8px var(--purple-glow)); }
-        .reward-slot.glow-gold .reward-icon { filter: drop-shadow(0 0 8px var(--gold)); }
-        .reward-label { font-size: 6px; text-transform: uppercase; text-align: center; color: rgba(255,255,255,0.9); padding: 1px 3px; background: rgba(0,0,0,0.5); border-radius: 2px; max-width: 95%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .claimed-check { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 28px; color: var(--green); text-shadow: 0 0 10px var(--green); z-index: 10; }
+        .spotlight-header {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px var(--purple-glow);
+        }
+
+        .grand-reward-card {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(180deg, #2a1a4a 0%, #1a0a2e 100%);
+            border: 2px solid #8b5cf6;
+            border-radius: 8px;
+            padding: 6px;
+            cursor: pointer;
+            margin-bottom: 0;
+        }
+
+        .grand-reward-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #c9a227, #f4d03f, #c9a227);
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .grand-unlock-badge {
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            text-align: center;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .grand-unlock-badge .unlock-text {
+            opacity: 0.8;
+        }
+
+        .grand-unlock-badge .unlock-level {
+            font-size: 12px;
+        }
+
+        .grand-card-frame {
+            background: linear-gradient(180deg, #3d2066 0%, #2a1248 100%);
+            border: 2px solid #a855f7;
+            border-radius: 6px;
+            padding: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grand-card-art {
+            width: 100%;
+            aspect-ratio: 0.85;
+            background: radial-gradient(circle at center, #6b3fa0 0%, #2d1b4e 60%, #1a0a2e 100%);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+
+        .grand-card-icon {
+            font-size: 50px;
+            filter: drop-shadow(0 0 20px var(--purple-glow));
+            animation: float-armor 3s ease-in-out infinite;
+        }
+
+        @keyframes float-armor {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .grand-card-name {
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 2px;
+        }
+
+        .grand-card-type {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            color: var(--gold);
+            opacity: 0.9;
+        }
+
+        .grand-reward-card.locked .grand-card-icon {
+            filter: grayscale(0.5) brightness(0.7) drop-shadow(0 0 10px var(--purple-glow));
+        }
+
+        .grand-reward-card.claimable {
+            animation: glow-card 2s ease-in-out infinite;
+        }
+
+        .grand-reward-card.claimable .grand-unlock-badge {
+            background: linear-gradient(90deg, #16a34a, #22c55e);
+        }
+
+        @keyframes glow-card {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px #f4d03f;
+            }
+
+            50% {
+                box-shadow: 0 0 25px #f4d03f, 0 0 40px rgba(244, 208, 63, 0.5);
+            }
+        }
+
+        .premium-section {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .premium-button {
+            width: 100%;
+            background: linear-gradient(180deg, #f4d03f 0%, #c9a227 50%, #a67c00 100%);
+            border: none;
+            border-radius: 20px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(244, 208, 63, 0.3);
+            font-size: 14px;
+            font-weight: bold;
+            color: #1a0a2e;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .premium-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(244, 208, 63, 0.5);
+        }
+
+        .premium-button.owned {
+            background: linear-gradient(180deg, #2d4a2d 0%, #1a3a1a 100%);
+            border: 2px solid var(--green);
+            cursor: default;
+            padding: 10px 16px;
+        }
+
+        .premium-button.owned:hover {
+            transform: none;
+            box-shadow: 0 4px 15px rgba(74, 222, 128, 0.2);
+        }
+
+        .premium-button-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .premium-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--green);
+        }
+
+        .premium-status-icon {
+            font-size: 14px;
+        }
+
+        .premium-expires {
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.6);
+            text-transform: none;
+            letter-spacing: 0.5px;
+            font-weight: normal;
+        }
+
+        .bp-right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: linear-gradient(180deg, rgba(45, 27, 78, 0.3) 0%, rgba(26, 10, 46, 0.5) 100%);
+            overflow: hidden;
+        }
+
+        .track-header {
+            display: grid;
+            grid-template-columns: 40px 1fr 1fr;
+            padding: 8px 6px;
+            background: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--purple-mid);
+            gap: 4px;
+        }
+
+        .track-header span {
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .track-header .free-label {
+            color: var(--purple-glow);
+        }
+
+        .track-header .prem-label {
+            color: var(--gold);
+        }
+
+        .bp-track-scroll {
+            flex: 1;
+            overflow-y: auto;
+            padding: 6px;
+        }
+
+        .bp-level {
+            display: grid;
+            grid-template-columns: 40px 1fr 1fr;
+            gap: 4px;
+            margin-bottom: 6px;
+            padding: 4px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: all 0.3s;
+            align-items: center;
+        }
+
+        .bp-level.current-level-row {
+            border-color: var(--purple-glow);
+            background: rgba(157, 78, 221, 0.15);
+            box-shadow: 0 0 10px rgba(157, 78, 221, 0.3);
+            padding: 6px;
+        }
+
+        .level-hex {
+            width: 28px;
+            height: 32px;
+            position: relative;
+            justify-self: center;
+        }
+
+        .level-hex-inner {
+            width: 100%;
+            height: 100%;
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .level-hex.locked .level-hex-inner {
+            background: linear-gradient(180deg, #4a4a6a 0%, #2a2a4a 100%);
+        }
+
+        .level-hex.current .level-hex-inner {
+            background: linear-gradient(180deg, #a855f7 0%, #7c3aed 100%);
+            box-shadow: 0 0 15px var(--purple-glow);
+        }
+
+        .level-hex.completed .level-hex-inner {
+            background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
+        }
+
+        .level-hex-star {
+            font-size: 6px;
+            color: var(--gold);
+            margin-bottom: -2px;
+        }
+
+        .level-hex-number {
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .bp-level.current-level-row .level-hex {
+            width: 40px;
+            height: 45px;
+        }
+
+        .bp-level.current-level-row .level-hex-star {
+            font-size: 9px;
+        }
+
+        .bp-level.current-level-row .level-hex-number {
+            font-size: 15px;
+        }
+
+        .bp-level.current-level-row .reward-icon {
+            font-size: 44px;
+        }
+
+        .bp-level.current-level-row .reward-slot {
+            min-height: 75px;
+        }
+
+        .bp-level.current-level-row .reward-label {
+            font-size: 7px;
+        }
+
+        .reward-slot {
+            aspect-ratio: 1;
+            border-radius: 6px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s;
+            overflow: visible;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2px;
+            min-height: 50px;
+        }
+
+        .reward-slot.free {
+            background: linear-gradient(180deg, #4a3a6a 0%, #2d1b4e 100%);
+            border: 2px solid #6b4a8a;
+        }
+
+        .reward-slot.premium {
+            background: linear-gradient(180deg, #5a4a2a 0%, #3d2a1a 100%);
+            border: 2px solid #8a6a2a;
+        }
+
+        .reward-slot.locked {
+            opacity: 0.5;
+        }
+
+        .reward-slot.claimable {
+            border-color: var(--gold);
+            animation: pulse-slot 2s infinite;
+        }
+
+        @keyframes pulse-slot {
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px var(--gold);
+            }
+
+            50% {
+                box-shadow: 0 0 15px var(--gold), 0 0 25px rgba(255, 215, 0, 0.5);
+            }
+        }
+
+        .reward-slot.claimed {
+            opacity: 0.5;
+        }
+
+        .reward-lock {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            z-index: 10;
+            box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.4);
+            animation: lock-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes lock-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 15px var(--gold), 0 0 30px rgba(255, 215, 0, 0.6);
+            }
+        }
+
+        .reward-icon {
+            font-size: 30px;
+            margin-bottom: 1px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        .reward-slot.glow-cyan .reward-icon {
+            filter: drop-shadow(0 0 8px var(--cyan-glow));
+        }
+
+        .reward-slot.glow-purple .reward-icon {
+            filter: drop-shadow(0 0 8px var(--purple-glow));
+        }
+
+        .reward-slot.glow-gold .reward-icon {
+            filter: drop-shadow(0 0 8px var(--gold));
+        }
+
+        .reward-label {
+            font-size: 6px;
+            text-transform: uppercase;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            padding: 1px 3px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 2px;
+            max-width: 95%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .claimed-check {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 28px;
+            color: var(--green);
+            text-shadow: 0 0 10px var(--green);
+            z-index: 10;
+        }
 
         /* Quest Panel */
-        .quest-panel { padding: 12px; }
-        .quest-section { margin-bottom: 16px; }
-        .quest-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--purple-mid); }
-        .quest-section-title { font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .quest-timer { font-size: 10px; color: var(--purple-glow); }
+        .quest-panel {
+            padding: 12px;
+        }
+
+        .quest-section {
+            margin-bottom: 16px;
+        }
+
+        .quest-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--purple-mid);
+        }
+
+        .quest-section-title {
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .quest-timer {
+            font-size: 10px;
+            color: var(--purple-glow);
+        }
 
         /* Week Accordion */
-        .weekly-accordion { margin-top: 8px; }
-        .week-header { display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%); border: 1px solid #3a3a4a; border-radius: 8px; margin-bottom: 4px; cursor: pointer; transition: all 0.3s; position: relative; }
-        .week-header:hover { background: linear-gradient(180deg, #3a3a4a 0%, #2a2a3a 100%); }
-        .week-header.expanded { background: linear-gradient(180deg, var(--purple-mid) 0%, #2d1b4e 100%); border-color: var(--purple-glow); border-radius: 8px 8px 0 0; margin-bottom: 0; }
-        .week-header.locked { opacity: 0.6; cursor: not-allowed; }
-        .week-header.locked:hover { background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%); }
-        .week-header.completed .week-title { color: var(--green); }
-        .week-header.has-claimable { animation: week-pulse-strong 1.2s ease-in-out infinite; border-color: var(--gold); background: linear-gradient(180deg, #3a3a2a 0%, #2a2a1a 100%); }
-        @keyframes week-pulse-strong {
-            0%, 100% { box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.3); }
-            50% { box-shadow: 0 0 25px var(--gold), 0 0 45px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 215, 0, 0.3); }
+        .weekly-accordion {
+            margin-top: 8px;
         }
-        .week-header-left { display: flex; align-items: center; gap: 8px; }
-        .week-chevron { font-size: 12px; transition: transform 0.3s; }
-        .week-header.expanded .week-chevron { transform: rotate(90deg); }
-        .week-title { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .week-lock-icon { font-size: 14px; }
-        .week-progress { font-size: 11px; font-weight: bold; color: var(--purple-glow); background: rgba(157, 78, 221, 0.2); padding: 2px 8px; border-radius: 10px; border: 1px solid var(--purple-glow); }
-        .week-progress.all-done { color: var(--green); background: rgba(74, 222, 128, 0.2); border-color: var(--green); }
-        .week-status { font-size: 9px; color: var(--gray-light); }
-        .week-status.unlocks { color: var(--purple-glow); }
-        .week-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; background: rgba(0,0,0,0.2); border: 1px solid var(--purple-glow); border-top: none; border-radius: 0 0 8px 8px; }
-        .week-content.expanded { max-height: 500px; }
-        .week-content-inner { padding: 8px; }
+
+        .week-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 12px;
+            background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%);
+            border: 1px solid #3a3a4a;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .week-header:hover {
+            background: linear-gradient(180deg, #3a3a4a 0%, #2a2a3a 100%);
+        }
+
+        .week-header.expanded {
+            background: linear-gradient(180deg, var(--purple-mid) 0%, #2d1b4e 100%);
+            border-color: var(--purple-glow);
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+        }
+
+        .week-header.locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .week-header.locked:hover {
+            background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%);
+        }
+
+        .week-header.completed .week-title {
+            color: var(--green);
+        }
+
+        .week-header.has-claimable {
+            animation: week-pulse-strong 1.2s ease-in-out infinite;
+            border-color: var(--gold);
+            background: linear-gradient(180deg, #3a3a2a 0%, #2a2a1a 100%);
+        }
+
+        @keyframes week-pulse-strong {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 25px var(--gold), 0 0 45px rgba(255, 215, 0, 0.5), 0 0 60px rgba(255, 215, 0, 0.3);
+            }
+        }
+
+        .week-header-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .week-chevron {
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+
+        .week-header.expanded .week-chevron {
+            transform: rotate(90deg);
+        }
+
+        .week-title {
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .week-lock-icon {
+            font-size: 14px;
+        }
+
+        .week-progress {
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--purple-glow);
+            background: rgba(157, 78, 221, 0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            border: 1px solid var(--purple-glow);
+        }
+
+        .week-progress.all-done {
+            color: var(--green);
+            background: rgba(74, 222, 128, 0.2);
+            border-color: var(--green);
+        }
+
+        .week-status {
+            font-size: 9px;
+            color: var(--gray-light);
+        }
+
+        .week-status.unlocks {
+            color: var(--purple-glow);
+        }
+
+        .week-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--purple-glow);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .week-content.expanded {
+            max-height: 500px;
+        }
+
+        .week-content-inner {
+            padding: 8px;
+        }
 
         /* Quest Item */
-        .quest-item { background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%); border-radius: 8px; padding: 10px; margin-bottom: 8px; border: 1px solid #3a3a4a; display: flex; align-items: center; gap: 10px; position: relative; transition: all 0.3s ease; }
-        .quest-item:last-child { margin-bottom: 0; }
-        .quest-item.claimed-quest { opacity: 0.7; }
-        
+        .quest-item {
+            background: linear-gradient(180deg, #2a2a3a 0%, #1a1a2a 100%);
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 1px solid #3a3a4a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .quest-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .quest-item.claimed-quest {
+            opacity: 0.7;
+        }
+
         /* Claimable Quest - Daily (subtler) */
-        .quest-item.claimable-quest:not(.weekly) { border-color: var(--gold); animation: quest-claimable-subtle 2s ease-in-out infinite; }
+        .quest-item.claimable-quest:not(.weekly) {
+            border-color: var(--gold);
+            animation: quest-claimable-subtle 2s ease-in-out infinite;
+        }
+
         @keyframes quest-claimable-subtle {
-            0%, 100% { box-shadow: 0 0 5px rgba(255, 215, 0, 0.4); }
-            50% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.6); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+            }
         }
-        
+
         /* Claimable Quest - Weekly (stronger) */
-        .quest-item.claimable-quest.weekly { border-color: var(--gold); animation: quest-claimable-glow 1.5s ease-in-out infinite; background: linear-gradient(180deg, #3a3a2a 0%, #2a2a1a 100%); }
+        .quest-item.claimable-quest.weekly {
+            border-color: var(--gold);
+            animation: quest-claimable-glow 1.5s ease-in-out infinite;
+            background: linear-gradient(180deg, #3a3a2a 0%, #2a2a1a 100%);
+        }
+
         @keyframes quest-claimable-glow {
-            0%, 100% { box-shadow: 0 0 8px var(--gold), inset 0 0 15px rgba(255, 215, 0, 0.1); }
-            50% { box-shadow: 0 0 20px var(--gold), 0 0 35px rgba(255, 215, 0, 0.4), inset 0 0 20px rgba(255, 215, 0, 0.15); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 8px var(--gold), inset 0 0 15px rgba(255, 215, 0, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 20px var(--gold), 0 0 35px rgba(255, 215, 0, 0.4), inset 0 0 20px rgba(255, 215, 0, 0.15);
+            }
         }
-        
-        .quest-info { flex: 1; }
-        .quest-name { font-size: 11px; font-weight: bold; margin-bottom: 6px; text-transform: uppercase; color: rgba(255,255,255,0.9); }
-        .quest-progress-bar { height: 22px; background: rgba(0,0,0,0.5); border-radius: 11px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.1); }
-        .quest-progress-fill { height: 100%; border-radius: 11px; transition: width 0.5s ease; }
-        .quest-item:not(.weekly) .quest-progress-fill { background: linear-gradient(180deg, #4a9eff 0%, #2a7edf 100%); }
-        .quest-item.weekly .quest-progress-fill { background: linear-gradient(180deg, var(--purple-glow) 0%, var(--purple-light) 100%); }
-        .quest-progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 10px; font-weight: bold; text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
-        
+
+        .quest-info {
+            flex: 1;
+        }
+
+        .quest-name {
+            font-size: 11px;
+            font-weight: bold;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .quest-progress-bar {
+            height: 22px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 11px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .quest-progress-fill {
+            height: 100%;
+            border-radius: 11px;
+            transition: width 0.5s ease;
+        }
+
+        .quest-item:not(.weekly) .quest-progress-fill {
+            background: linear-gradient(180deg, #4a9eff 0%, #2a7edf 100%);
+        }
+
+        .quest-item.weekly .quest-progress-fill {
+            background: linear-gradient(180deg, var(--purple-glow) 0%, var(--purple-light) 100%);
+        }
+
+        .quest-progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10px;
+            font-weight: bold;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+        }
+
         /* Quest Reward */
-        .quest-reward { width: 44px; height: 44px; background: linear-gradient(135deg, var(--purple-mid), #1a0a2e); border-radius: 6px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid var(--purple-light); position: relative; flex-shrink: 0; transition: all 0.3s; }
-        .quest-reward.claimable-reward { border-color: var(--gold); animation: reward-strong-glow 1.5s ease-in-out infinite; }
+        .quest-reward {
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, var(--purple-mid), #1a0a2e);
+            border-radius: 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--purple-light);
+            position: relative;
+            flex-shrink: 0;
+            transition: all 0.3s;
+        }
+
+        .quest-reward.claimable-reward {
+            border-color: var(--gold);
+            animation: reward-strong-glow 1.5s ease-in-out infinite;
+        }
+
         @keyframes reward-strong-glow {
-            0%, 100% { box-shadow: 0 0 8px var(--gold); }
-            50% { box-shadow: 0 0 20px var(--gold), 0 0 35px rgba(255, 215, 0, 0.5); }
+
+            0%,
+            100% {
+                box-shadow: 0 0 8px var(--gold);
+            }
+
+            50% {
+                box-shadow: 0 0 20px var(--gold), 0 0 35px rgba(255, 215, 0, 0.5);
+            }
         }
-        .quest-reward.claimable-reward .quest-reward-icon { animation: reward-bounce 1s ease-in-out infinite; }
+
+        .quest-reward.claimable-reward .quest-reward-icon {
+            animation: reward-bounce 1s ease-in-out infinite;
+        }
+
         @keyframes reward-bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-3px);
+            }
         }
-        .quest-reward.ready-glow { animation: reward-strong-glow 1.5s ease-in-out infinite; border-color: var(--gold); }
-        .quest-reward-icon { font-size: 18px; }
-        .quest-reward-amount { font-size: 9px; font-weight: bold; color: var(--gold); }
-        .quest-reward-collected { font-size: 7px; font-weight: bold; color: var(--green); text-transform: uppercase; }
-        .quest-reward-lock { position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); border: 2px solid var(--gold); border-radius: 50%; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; font-size: 11px; z-index: 10; box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.4); animation: lock-glow 2s ease-in-out infinite; }
-        .quest-btn { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; cursor: pointer; border-radius: 11px; transition: all 0.3s; }
-        .quest-btn.claim { background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%); color: #1a0a2e; }
+
+        .quest-reward.ready-glow {
+            animation: reward-strong-glow 1.5s ease-in-out infinite;
+            border-color: var(--gold);
+        }
+
+        .quest-reward-icon {
+            font-size: 18px;
+        }
+
+        .quest-reward-amount {
+            font-size: 9px;
+            font-weight: bold;
+            color: var(--gold);
+        }
+
+        .quest-reward-collected {
+            font-size: 7px;
+            font-weight: bold;
+            color: var(--green);
+            text-transform: uppercase;
+        }
+
+        .quest-reward-lock {
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            z-index: 10;
+            box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.4);
+            animation: lock-glow 2s ease-in-out infinite;
+        }
+
+        .quest-btn {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 11px;
+            transition: all 0.3s;
+        }
+
+        .quest-btn.claim {
+            background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: #1a0a2e;
+        }
 
         /* Debug Panel - Right Side */
-        .debug-toggle { position: fixed; right: 0; top: 50%; transform: translateY(-50%); background: rgba(239, 68, 68, 0.9); border: none; border-radius: 8px 0 0 8px; padding: 10px 6px; cursor: pointer; z-index: 1001; font-size: 14px; }
-        .debug-panel { position: fixed; right: -110px; top: 50%; transform: translateY(-50%); width: 100px; background: rgba(0,0,0,0.95); border: 2px solid #ef4444; border-right: none; border-radius: 8px 0 0 8px; padding: 10px 8px; z-index: 1000; transition: right 0.3s ease; }
-        .debug-panel.expanded { right: 0; }
-        .debug-title { font-size: 8px; text-transform: uppercase; letter-spacing: 1px; color: #ef4444; margin-bottom: 8px; text-align: center; }
-        .debug-buttons { display: flex; flex-direction: column; gap: 4px; }
-        .debug-btn { padding: 6px 4px; font-size: 8px; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; transition: all 0.2s; text-transform: uppercase; text-align: center; }
-        .debug-btn:hover { transform: scale(1.05); }
-        .debug-btn.xp { background: var(--purple-glow); color: white; }
-        .debug-btn.quest { background: #3b82f6; color: white; }
-        .debug-btn.reset { background: #ef4444; color: white; }
-        .debug-btn.premium { background: var(--gold); color: black; }
-        .debug-btn.time { background: #10b981; color: white; }
+        .debug-toggle {
+            position: fixed;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(239, 68, 68, 0.9);
+            border: none;
+            border-radius: 8px 0 0 8px;
+            padding: 10px 6px;
+            cursor: pointer;
+            z-index: 1001;
+            font-size: 14px;
+        }
+
+        .debug-panel {
+            position: fixed;
+            right: -110px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100px;
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #ef4444;
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            padding: 10px 8px;
+            z-index: 1000;
+            transition: right 0.3s ease;
+        }
+
+        .debug-panel.expanded {
+            right: 0;
+        }
+
+        .debug-title {
+            font-size: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ef4444;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .debug-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .debug-btn {
+            padding: 6px 4px;
+            font-size: 8px;
+            font-weight: bold;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .debug-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .debug-btn.xp {
+            background: var(--purple-glow);
+            color: white;
+        }
+
+        .debug-btn.quest {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .debug-btn.reset {
+            background: #ef4444;
+            color: white;
+        }
+
+        .debug-btn.premium {
+            background: var(--gold);
+            color: black;
+        }
+
+        .debug-btn.time {
+            background: #10b981;
+            color: white;
+        }
 
         /* Overlays */
-        .celebration-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; flex-direction: column; }
-        .celebration-overlay.active { display: flex; animation: fade-in 0.5s ease; }
-        @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-        .celebration-content { text-align: center; animation: scale-in 0.5s ease 0.3s both; padding: 20px; }
-        @keyframes scale-in { from { transform: scale(0.5); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-        .celebration-title { font-size: 20px; font-weight: bold; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; text-shadow: 0 0 30px var(--gold); }
-        .celebration-icon { font-size: 100px; margin-bottom: 20px; animation: float 2s ease-in-out infinite; filter: drop-shadow(0 0 40px var(--purple-glow)); }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
-        .celebration-name { font-size: 24px; font-weight: bold; margin-bottom: 10px; background: linear-gradient(135deg, #fff, var(--purple-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .celebration-desc { font-size: 12px; color: var(--gray-light); margin-bottom: 30px; }
-        .celebration-close { padding: 12px 36px; background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%); border: none; border-radius: 8px; font-size: 13px; font-weight: bold; text-transform: uppercase; color: black; cursor: pointer; transition: all 0.3s; }
-        .celebration-close:hover { transform: scale(1.05); box-shadow: 0 0 25px var(--gold); }
-        .particles { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; overflow: hidden; }
-        .particle { position: absolute; width: 10px; height: 10px; border-radius: 50%; animation: particle-fall 3s linear infinite; }
-        @keyframes particle-fall { 0% { transform: translateY(-100px) rotate(0deg); opacity: 1; } 100% { transform: translateY(100vh) rotate(720deg); opacity: 0; } }
-        .cascade-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1500; flex-direction: column; }
-        .cascade-overlay.active { display: flex; }
-        .cascade-title { font-size: 18px; font-weight: bold; color: var(--gold); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
-        .cascade-rewards { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-width: 280px; }
-        .cascade-reward { width: 50px; height: 50px; background: linear-gradient(135deg, var(--purple-mid), #1a0a2e); border: 2px solid var(--gold); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; opacity: 0; transform: scale(0); animation: cascade-pop 0.4s ease forwards; }
-        @keyframes cascade-pop { 0% { opacity: 0; transform: scale(0) rotate(-180deg); } 70% { transform: scale(1.2) rotate(10deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
-        .bp-track-scroll::-webkit-scrollbar, .tab-content::-webkit-scrollbar { width: 4px; }
-        .bp-track-scroll::-webkit-scrollbar-track, .tab-content::-webkit-scrollbar-track { background: transparent; }
-        .bp-track-scroll::-webkit-scrollbar-thumb, .tab-content::-webkit-scrollbar-thumb { background: var(--purple-light); border-radius: 2px; }
+        .celebration-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            flex-direction: column;
+        }
+
+        .celebration-overlay.active {
+            display: flex;
+            animation: fade-in 0.5s ease;
+        }
+
+        @keyframes fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .celebration-content {
+            text-align: center;
+            animation: scale-in 0.5s ease 0.3s both;
+            padding: 20px;
+        }
+
+        @keyframes scale-in {
+            from {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .celebration-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px var(--gold);
+        }
+
+        .celebration-icon {
+            font-size: 100px;
+            margin-bottom: 20px;
+            animation: float 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px var(--purple-glow));
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .celebration-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff, var(--purple-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .celebration-desc {
+            font-size: 12px;
+            color: var(--gray-light);
+            margin-bottom: 30px;
+        }
+
+        .celebration-close {
+            padding: 12px 36px;
+            background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: black;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .celebration-close:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--gold);
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            animation: particle-fall 3s linear infinite;
+        }
+
+        @keyframes particle-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .cascade-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1500;
+            flex-direction: column;
+        }
+
+        .cascade-overlay.active {
+            display: flex;
+        }
+
+        .cascade-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .cascade-rewards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            max-width: 280px;
+        }
+
+        .cascade-reward {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple-mid), #1a0a2e);
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            opacity: 0;
+            transform: scale(0);
+            animation: cascade-pop 0.4s ease forwards;
+        }
+
+        @keyframes cascade-pop {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+
+            70% {
+                transform: scale(1.2) rotate(10deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .bp-track-scroll::-webkit-scrollbar,
+        .tab-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .bp-track-scroll::-webkit-scrollbar-track,
+        .tab-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .bp-track-scroll::-webkit-scrollbar-thumb,
+        .tab-content::-webkit-scrollbar-thumb {
+            background: var(--purple-light);
+            border-radius: 2px;
+        }
 
         /* Premium Modal */
-        .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; }
-        .modal-overlay.active { display: flex; animation: fade-in 0.3s ease; }
-        .modal-content { background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%); border: 2px solid var(--gold); border-radius: 16px; padding: 24px; max-width: 320px; width: 90%; text-align: center; animation: scale-in 0.3s ease; }
-        .modal-icon { font-size: 48px; margin-bottom: 12px; animation: float 2s ease-in-out infinite; }
-        .modal-title { font-size: 20px; font-weight: bold; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
-        .modal-desc { font-size: 12px; color: rgba(255,255,255,0.8); margin-bottom: 16px; line-height: 1.4; }
-        .modal-price { font-size: 32px; font-weight: bold; color: var(--gold); margin-bottom: 16px; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
-        .modal-benefits { margin-bottom: 20px; }
-        .modal-benefit { font-size: 11px; color: var(--green); margin-bottom: 6px; text-align: left; padding-left: 20px; }
-        .modal-buttons { display: flex; flex-direction: column; gap: 10px; }
-        .modal-btn { padding: 12px 24px; border: none; border-radius: 8px; font-size: 14px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; transition: all 0.3s; }
-        .modal-btn.confirm { background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%); color: #1a0a2e; }
-        .modal-btn.confirm:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
-        .modal-btn.cancel { background: transparent; border: 1px solid var(--gray-light); color: var(--gray-light); }
-        .modal-btn.cancel:hover { border-color: white; color: white; }
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+            animation: fade-in 0.3s ease;
+        }
+
+        .modal-content {
+            background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%);
+            border: 2px solid var(--gold);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 320px;
+            width: 90%;
+            text-align: center;
+            animation: scale-in 0.3s ease;
+        }
+
+        .modal-icon {
+            font-size: 48px;
+            margin-bottom: 12px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+        }
+
+        .modal-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .modal-price {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--gold);
+            margin-bottom: 16px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .modal-benefits {
+            margin-bottom: 20px;
+        }
+
+        .modal-benefit {
+            font-size: 11px;
+            color: var(--green);
+            margin-bottom: 6px;
+            text-align: left;
+            padding-left: 20px;
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-btn.confirm {
+            background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+            color: #1a0a2e;
+        }
+
+        .modal-btn.confirm:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        .modal-btn.cancel {
+            background: transparent;
+            border: 1px solid var(--gray-light);
+            color: var(--gray-light);
+        }
+
+        .modal-btn.cancel:hover {
+            border-color: white;
+            color: white;
+        }
 
         /* Reward Preview Modal */
-        .reward-preview-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; }
-        .reward-preview-modal.active { display: flex; animation: fade-in 0.3s ease; }
-        .reward-preview-content { background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%); border: 2px solid var(--gold); border-radius: 16px; padding: 24px; max-width: 280px; width: 85%; text-align: center; animation: scale-in 0.3s ease; }
-        .reward-preview-lock { font-size: 40px; margin-bottom: 8px; }
-        .reward-preview-title { font-size: 14px; font-weight: bold; color: var(--gray-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
-        .reward-preview-icon { font-size: 64px; margin-bottom: 12px; filter: drop-shadow(0 0 20px var(--gold)); }
-        .reward-preview-name { font-size: 18px; font-weight: bold; color: white; margin-bottom: 4px; }
-        .reward-preview-quantity { font-size: 14px; color: var(--gold); margin-bottom: 20px; }
-        .reward-preview-buttons { display: flex; flex-direction: column; gap: 10px; }
+        .reward-preview-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 4000;
+        }
+
+        .reward-preview-modal.active {
+            display: flex;
+            animation: fade-in 0.3s ease;
+        }
+
+        .reward-preview-content {
+            background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%);
+            border: 2px solid var(--gold);
+            border-radius: 16px;
+            padding: 24px;
+            max-width: 280px;
+            width: 85%;
+            text-align: center;
+            animation: scale-in 0.3s ease;
+        }
+
+        .reward-preview-lock {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .reward-preview-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: var(--gray-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 16px;
+        }
+
+        .reward-preview-icon {
+            font-size: 64px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 20px var(--gold));
+        }
+
+        .reward-preview-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .reward-preview-quantity {
+            font-size: 14px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .reward-preview-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
 
         /* Premium Purchase Modal - Elegant & Juicy */
-        .premium-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; }
-        .premium-modal-overlay.active { display: flex; animation: fade-in 0.3s ease; }
-        .premium-modal-content { background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%); border: 3px solid var(--gold); border-radius: 20px; padding: 24px 20px; max-width: 340px; width: 92%; text-align: center; animation: scale-in 0.4s ease; position: relative; overflow: hidden; box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), inset 0 0 60px rgba(157, 78, 221, 0.1); }
-        .premium-modal-content::before { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 50%); animation: premium-bg-pulse 3s ease-in-out infinite; pointer-events: none; }
-        @keyframes premium-bg-pulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.1); opacity: 0.8; } }
-        .premium-modal-crown { font-size: 56px; margin-bottom: 8px; animation: crown-float 2s ease-in-out infinite; filter: drop-shadow(0 0 20px var(--gold)); position: relative; z-index: 1; }
-        @keyframes crown-float { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-8px) rotate(5deg); } }
-        .premium-modal-title { font-size: 24px; font-weight: bold; color: var(--gold); text-transform: uppercase; letter-spacing: 3px; margin-bottom: 4px; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); position: relative; z-index: 1; }
-        .premium-modal-price { font-size: 36px; font-weight: bold; color: white; margin-bottom: 16px; text-shadow: 0 0 15px rgba(255, 255, 255, 0.3); position: relative; z-index: 1; }
-        .premium-modal-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 16px 0; position: relative; z-index: 1; }
-        .premium-spotlight-section { margin-bottom: 16px; position: relative; z-index: 1; }
-        .premium-spotlight-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: var(--gold); margin-bottom: 8px; }
-        .premium-spotlight-item { display: flex; align-items: center; justify-content: center; gap: 12px; background: linear-gradient(180deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%); border: 2px solid var(--gold); border-radius: 12px; padding: 12px; animation: spotlight-glow 2s ease-in-out infinite; }
-        @keyframes spotlight-glow { 0%, 100% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.3); } 50% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.5); } }
-        .premium-spotlight-icon { font-size: 40px; filter: drop-shadow(0 0 15px var(--gold)); }
-        .premium-spotlight-info { text-align: left; }
-        .premium-spotlight-name { font-size: 14px; font-weight: bold; color: white; }
-        .premium-spotlight-desc { font-size: 10px; color: var(--green); }
-        .premium-instant-section { margin-bottom: 16px; position: relative; z-index: 1; }
-        .premium-instant-label { font-size: 10px; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.7); margin-bottom: 10px; }
-        .premium-instant-rewards { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
-        .premium-instant-reward { width: 42px; height: 42px; background: linear-gradient(135deg, var(--purple-mid), #1a0a2e); border: 2px solid var(--purple-glow); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; opacity: 0; transform: scale(0); }
-        .premium-instant-reward.visible { animation: reward-pop-in 0.3s ease forwards; }
-        @keyframes reward-pop-in { 0% { opacity: 0; transform: scale(0) rotate(-180deg); } 70% { transform: scale(1.1) rotate(5deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
-        .premium-instant-more { font-size: 11px; color: var(--purple-glow); margin-top: 8px; }
-        .premium-modal-buttons { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; position: relative; z-index: 1; }
-        .premium-buy-btn { padding: 14px 24px; background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%); border: none; border-radius: 12px; font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; color: #1a0a2e; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4); }
-        .premium-buy-btn:hover { transform: scale(1.03); box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6); }
-        .premium-cancel-btn { padding: 10px 24px; background: transparent; border: 1px solid var(--gray-light); border-radius: 8px; font-size: 12px; color: var(--gray-light); cursor: pointer; transition: all 0.3s; }
-        .premium-cancel-btn:hover { border-color: white; color: white; }
+        .premium-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .premium-modal-overlay.active {
+            display: flex;
+            animation: fade-in 0.3s ease;
+        }
+
+        .premium-modal-content {
+            background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%);
+            border: 3px solid var(--gold);
+            border-radius: 20px;
+            padding: 24px 20px;
+            max-width: 340px;
+            width: 92%;
+            text-align: center;
+            animation: scale-in 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.3), inset 0 0 60px rgba(157, 78, 221, 0.1);
+        }
+
+        .premium-modal-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            animation: premium-bg-pulse 3s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes premium-bg-pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .premium-modal-crown {
+            font-size: 56px;
+            margin-bottom: 8px;
+            animation: crown-float 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px var(--gold));
+            position: relative;
+            z-index: 1;
+        }
+
+        @keyframes crown-float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-5deg);
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(5deg);
+            }
+        }
+
+        .premium-modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 4px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            position: relative;
+            z-index: 1;
+        }
+
+        .premium-modal-price {
+            font-size: 36px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 16px;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            position: relative;
+            z-index: 1;
+        }
+
+        .premium-modal-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 16px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .premium-spotlight-section {
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .premium-spotlight-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+
+        .premium-spotlight-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 215, 0, 0.05) 100%);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 12px;
+            animation: spotlight-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes spotlight-glow {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            }
+        }
+
+        .premium-spotlight-icon {
+            font-size: 40px;
+            filter: drop-shadow(0 0 15px var(--gold));
+        }
+
+        .premium-spotlight-info {
+            text-align: left;
+        }
+
+        .premium-spotlight-name {
+            font-size: 14px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .premium-spotlight-desc {
+            font-size: 10px;
+            color: var(--green);
+        }
+
+        .premium-instant-section {
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .premium-instant-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .premium-instant-rewards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        .premium-instant-reward {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--purple-mid), #1a0a2e);
+            border: 2px solid var(--purple-glow);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .premium-instant-reward.visible {
+            animation: reward-pop-in 0.3s ease forwards;
+        }
+
+        @keyframes reward-pop-in {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+
+            70% {
+                transform: scale(1.1) rotate(5deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .premium-instant-more {
+            font-size: 11px;
+            color: var(--purple-glow);
+            margin-top: 8px;
+        }
+
+        .premium-modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .premium-buy-btn {
+            padding: 14px 24px;
+            background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #1a0a2e;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        .premium-buy-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 30px rgba(255, 215, 0, 0.6);
+        }
+
+        .premium-cancel-btn {
+            padding: 10px 24px;
+            background: transparent;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 12px;
+            color: var(--gray-light);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .premium-cancel-btn:hover {
+            border-color: white;
+            color: white;
+        }
 
         /* Epic Purchase Celebration */
-        .purchase-celebration { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(ellipse at center, #1a0a2e 0%, #000 100%); display: none; align-items: center; justify-content: center; z-index: 2100; flex-direction: column; overflow: hidden; }
-        .purchase-celebration.active { display: flex; animation: celebration-fade-in 0.8s ease; }
-        @keyframes celebration-fade-in { from { opacity: 0; } to { opacity: 1; } }
-        .purchase-glow { position: absolute; top: 50%; left: 50%; width: 600px; height: 600px; transform: translate(-50%, -50%); background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.3) 0%, rgba(157, 78, 221, 0.2) 30%, transparent 70%); animation: glow-pulse 2s ease-in-out infinite; pointer-events: none; }
-        @keyframes glow-pulse { 0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; } }
-        .purchase-celebration-content { text-align: center; z-index: 1; padding: 20px; max-width: 360px; width: 95%; }
-        .purchase-celebration-header { animation: header-drop 0.6s ease 0.3s both; }
-        @keyframes header-drop { from { opacity: 0; transform: translateY(-50px); } to { opacity: 1; transform: translateY(0); } }
-        .purchase-celebration-icon { font-size: 70px; margin-bottom: 8px; animation: crown-epic-float 2s ease-in-out infinite; filter: drop-shadow(0 0 40px var(--gold)) drop-shadow(0 0 80px rgba(255, 215, 0, 0.5)); }
-        @keyframes crown-epic-float { 0%, 100% { transform: translateY(0) rotate(-8deg) scale(1); } 50% { transform: translateY(-15px) rotate(8deg) scale(1.1); } }
-        .purchase-celebration-title { font-size: 26px; font-weight: bold; color: var(--gold); text-transform: uppercase; letter-spacing: 4px; margin-bottom: 20px; text-shadow: 0 0 30px var(--gold), 0 0 60px rgba(255, 215, 0, 0.5); animation: title-glow 1.5s ease-in-out infinite; }
-        @keyframes title-glow { 0%, 100% { text-shadow: 0 0 30px var(--gold), 0 0 60px rgba(255, 215, 0, 0.5); } 50% { text-shadow: 0 0 40px var(--gold), 0 0 80px rgba(255, 215, 0, 0.7), 0 0 120px rgba(255, 215, 0, 0.3); } }
-        .purchase-rewards-showcase { animation: showcase-appear 0.8s ease 0.5s both; }
-        @keyframes showcase-appear { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
-        .purchase-spotlight-reward { position: relative; background: linear-gradient(180deg, rgba(255, 215, 0, 0.2) 0%, rgba(157, 78, 221, 0.1) 100%); border: 3px solid var(--gold); border-radius: 16px; padding: 20px; margin-bottom: 16px; animation: spotlight-pulse 2s ease-in-out infinite; }
-        @keyframes spotlight-pulse { 0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), inset 0 0 30px rgba(255, 215, 0, 0.1); } 50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6), 0 0 80px rgba(255, 215, 0, 0.3), inset 0 0 40px rgba(255, 215, 0, 0.15); } }
-        .purchase-spotlight-glow { position: absolute; top: 50%; left: 50%; width: 150%; height: 150%; transform: translate(-50%, -50%); background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.3) 0%, transparent 60%); animation: inner-glow 2s ease-in-out infinite; pointer-events: none; }
-        @keyframes inner-glow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-        .purchase-spotlight-icon { font-size: 60px; margin-bottom: 8px; animation: spotlight-icon-bounce 1s ease-in-out infinite; filter: drop-shadow(0 0 25px var(--gold)); }
-        @keyframes spotlight-icon-bounce { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-8px) scale(1.05); } }
-        .purchase-spotlight-name { font-size: 18px; font-weight: bold; color: white; margin-bottom: 4px; }
-        .purchase-spotlight-tag { display: inline-block; background: linear-gradient(90deg, var(--gold), #f4d03f); color: #1a0a2e; font-size: 10px; font-weight: bold; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 2px; }
-        .purchase-rewards-divider { color: rgba(255,255,255,0.6); font-size: 11px; margin: 16px 0; text-transform: uppercase; letter-spacing: 2px; position: relative; }
-        .purchase-rewards-divider::before, .purchase-rewards-divider::after { content: ''; position: absolute; top: 50%; width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--purple-glow), transparent); }
-        .purchase-rewards-divider::before { right: calc(50% + 80px); }
-        .purchase-rewards-divider::after { left: calc(50% + 80px); }
-        .purchase-rewards-grid { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 12px; }
-        .purchase-reward-item { width: 48px; height: 48px; background: linear-gradient(135deg, var(--purple-mid), #1a0a2e); border: 2px solid var(--purple-glow); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; opacity: 0; transform: scale(0) rotate(-180deg); }
-        .purchase-reward-item.pop { animation: reward-epic-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        @keyframes reward-epic-pop { 0% { opacity: 0; transform: scale(0) rotate(-180deg); } 60% { transform: scale(1.3) rotate(10deg); } 80% { transform: scale(0.9) rotate(-5deg); } 100% { opacity: 1; transform: scale(1) rotate(0deg); } }
-        .purchase-reward-item.pop::after { content: ''; position: absolute; inset: -4px; border-radius: 12px; background: linear-gradient(45deg, var(--gold), var(--purple-glow)); opacity: 0; animation: ring-burst 0.6s ease forwards; z-index: -1; }
-        @keyframes ring-burst { 0% { opacity: 0.8; transform: scale(0.8); } 100% { opacity: 0; transform: scale(1.5); } }
-        .purchase-rewards-total { font-size: 13px; color: var(--green); font-weight: bold; margin-bottom: 20px; animation: total-pulse 1s ease-in-out infinite; }
-        @keyframes total-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
-        .purchase-celebration-btn { position: relative; padding: 16px 50px; background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%); border: none; border-radius: 12px; font-size: 16px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; color: #1a0a2e; cursor: pointer; transition: all 0.3s; box-shadow: 0 6px 30px rgba(255, 215, 0, 0.5); overflow: hidden; animation: btn-appear 0.5s ease 1.5s both; }
-        @keyframes btn-appear { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .purchase-celebration-btn:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 10px 40px rgba(255, 215, 0, 0.7); }
-        .btn-shine { position: absolute; top: 0; left: -100%; width: 100%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent); animation: btn-shine-move 2s ease-in-out infinite; }
-        @keyframes btn-shine-move { 0% { left: -100%; } 50%, 100% { left: 100%; } }
+        .purchase-celebration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, #1a0a2e 0%, #000 100%);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2100;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .purchase-celebration.active {
+            display: flex;
+            animation: celebration-fade-in 0.8s ease;
+        }
+
+        @keyframes celebration-fade-in {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .purchase-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.3) 0%, rgba(157, 78, 221, 0.2) 30%, transparent 70%);
+            animation: glow-pulse 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes glow-pulse {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        .purchase-celebration-content {
+            text-align: center;
+            z-index: 1;
+            padding: 20px;
+            max-width: 360px;
+            width: 95%;
+        }
+
+        .purchase-celebration-header {
+            animation: header-drop 0.6s ease 0.3s both;
+        }
+
+        @keyframes header-drop {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .purchase-celebration-icon {
+            font-size: 70px;
+            margin-bottom: 8px;
+            animation: crown-epic-float 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px var(--gold)) drop-shadow(0 0 80px rgba(255, 215, 0, 0.5));
+        }
+
+        @keyframes crown-epic-float {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(-8deg) scale(1);
+            }
+
+            50% {
+                transform: translateY(-15px) rotate(8deg) scale(1.1);
+            }
+        }
+
+        .purchase-celebration-title {
+            font-size: 26px;
+            font-weight: bold;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px var(--gold), 0 0 60px rgba(255, 215, 0, 0.5);
+            animation: title-glow 1.5s ease-in-out infinite;
+        }
+
+        @keyframes title-glow {
+
+            0%,
+            100% {
+                text-shadow: 0 0 30px var(--gold), 0 0 60px rgba(255, 215, 0, 0.5);
+            }
+
+            50% {
+                text-shadow: 0 0 40px var(--gold), 0 0 80px rgba(255, 215, 0, 0.7), 0 0 120px rgba(255, 215, 0, 0.3);
+            }
+        }
+
+        .purchase-rewards-showcase {
+            animation: showcase-appear 0.8s ease 0.5s both;
+        }
+
+        @keyframes showcase-appear {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .purchase-spotlight-reward {
+            position: relative;
+            background: linear-gradient(180deg, rgba(255, 215, 0, 0.2) 0%, rgba(157, 78, 221, 0.1) 100%);
+            border: 3px solid var(--gold);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            animation: spotlight-pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes spotlight-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 20px rgba(255, 215, 0, 0.4), inset 0 0 30px rgba(255, 215, 0, 0.1);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(255, 215, 0, 0.6), 0 0 80px rgba(255, 215, 0, 0.3), inset 0 0 40px rgba(255, 215, 0, 0.15);
+            }
+        }
+
+        .purchase-spotlight-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.3) 0%, transparent 60%);
+            animation: inner-glow 2s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes inner-glow {
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        .purchase-spotlight-icon {
+            font-size: 60px;
+            margin-bottom: 8px;
+            animation: spotlight-icon-bounce 1s ease-in-out infinite;
+            filter: drop-shadow(0 0 25px var(--gold));
+        }
+
+        @keyframes spotlight-icon-bounce {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-8px) scale(1.05);
+            }
+        }
+
+        .purchase-spotlight-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 4px;
+        }
+
+        .purchase-spotlight-tag {
+            display: inline-block;
+            background: linear-gradient(90deg, var(--gold), #f4d03f);
+            color: #1a0a2e;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .purchase-rewards-divider {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 11px;
+            margin: 16px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .purchase-rewards-divider::before,
+        .purchase-rewards-divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--purple-glow), transparent);
+        }
+
+        .purchase-rewards-divider::before {
+            right: calc(50% + 80px);
+        }
+
+        .purchase-rewards-divider::after {
+            left: calc(50% + 80px);
+        }
+
+        .purchase-rewards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 12px;
+        }
+
+        .purchase-reward-item {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--purple-mid), #1a0a2e);
+            border: 2px solid var(--purple-glow);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            opacity: 0;
+            transform: scale(0) rotate(-180deg);
+        }
+
+        .purchase-reward-item.pop {
+            animation: reward-epic-pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes reward-epic-pop {
+            0% {
+                opacity: 0;
+                transform: scale(0) rotate(-180deg);
+            }
+
+            60% {
+                transform: scale(1.3) rotate(10deg);
+            }
+
+            80% {
+                transform: scale(0.9) rotate(-5deg);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .purchase-reward-item.pop::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, var(--gold), var(--purple-glow));
+            opacity: 0;
+            animation: ring-burst 0.6s ease forwards;
+            z-index: -1;
+        }
+
+        @keyframes ring-burst {
+            0% {
+                opacity: 0.8;
+                transform: scale(0.8);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(1.5);
+            }
+        }
+
+        .purchase-rewards-total {
+            font-size: 13px;
+            color: var(--green);
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: total-pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes total-pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .purchase-celebration-btn {
+            position: relative;
+            padding: 16px 50px;
+            background: linear-gradient(180deg, var(--gold) 0%, var(--gold-dark) 100%);
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #1a0a2e;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 6px 30px rgba(255, 215, 0, 0.5);
+            overflow: hidden;
+            animation: btn-appear 0.5s ease 1.5s both;
+        }
+
+        @keyframes btn-appear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .purchase-celebration-btn:hover {
+            transform: scale(1.05) translateY(-2px);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.7);
+        }
+
+        .btn-shine {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            animation: btn-shine-move 2s ease-in-out infinite;
+        }
+
+        @keyframes btn-shine-move {
+            0% {
+                left: -100%;
+            }
+
+            50%,
+            100% {
+                left: 100%;
+            }
+        }
+
+        /* FTUE Styles */
+        .ftue-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 3000;
+            pointer-events: all;
+            display: none;
+        }
+
+        .ftue-overlay.active {
+            display: block;
+        }
+
+        .ftue-backdrop {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .ftue-spotlight {
+            position: absolute;
+            border-radius: 12px;
+            box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.6);
+            pointer-events: none;
+            transition: all 0.4s ease;
+            z-index: 3001;
+        }
+
+        .ftue-spotlight::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 16px;
+            border: 3px solid var(--gold);
+            animation: ftue-pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes ftue-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px var(--gold), 0 0 20px rgba(255, 215, 0, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 25px var(--gold), 0 0 50px rgba(255, 215, 0, 0.5);
+            }
+        }
+
+        .ftue-tooltip {
+            position: absolute;
+            background: linear-gradient(180deg, #2d1b4e 0%, #1a0a2e 100%);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 16px 20px;
+            max-width: 280px;
+            z-index: 3002;
+            animation: ftue-tooltip-appear 0.4s ease;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes ftue-tooltip-appear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .ftue-tooltip::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: linear-gradient(135deg, #2d1b4e 50%, transparent 50%);
+            border-left: 2px solid var(--gold);
+            border-top: 2px solid var(--gold);
+        }
+
+        .ftue-tooltip.arrow-up::before {
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%) rotate(45deg);
+        }
+
+        .ftue-tooltip.arrow-down::before {
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-135deg);
+        }
+
+        .ftue-tooltip.arrow-left::before {
+            left: -10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-45deg);
+        }
+
+        .ftue-tooltip.arrow-right::before {
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%) rotate(135deg);
+        }
+
+        .ftue-text {
+            font-size: 14px;
+            color: white;
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .ftue-text strong {
+            color: var(--gold);
+        }
+
+        .ftue-hint {
+            font-size: 11px;
+            color: var(--purple-glow);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .ftue-hint-icon {
+            animation: ftue-tap 1s ease-in-out infinite;
+        }
+
+        @keyframes ftue-tap {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.2);
+            }
+        }
+
+        .ftue-highlight {
+            position: relative;
+            z-index: 3001;
+            pointer-events: auto !important;
+        }
+
+        .ftue-tap-indicator {
+            position: absolute;
+            font-size: 36px;
+            z-index: 3003;
+            pointer-events: none;
+            animation: ftue-tap-bounce 1s ease-in-out infinite;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+        }
+
+        @keyframes ftue-tap-bounce {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-8px) scale(1.15);
+            }
+        }
+
+        .ftue-step-indicator {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 3002;
+        }
+
+        .ftue-step-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transition: all 0.3s;
+        }
+
+        .ftue-step-dot.active {
+            background: var(--gold);
+            box-shadow: 0 0 10px var(--gold);
+        }
+
+        .ftue-step-dot.completed {
+            background: var(--green);
+        }
     </style>
 </head>
+
 <body>
     <div class="app-container">
         <div class="hero-banner">
@@ -380,8 +2587,10 @@
             </div>
         </div>
         <div class="nav-tabs">
-            <div class="nav-tab active" data-tab="battlepass">Battle Pass<span class="red-dot" id="bp-dot" style="display: none"></span></div>
-            <div class="nav-tab" data-tab="quests">Quests<span class="red-dot" id="quest-dot" style="display: none"></span></div>
+            <div class="nav-tab active" data-tab="battlepass">Battle Pass<span class="red-dot" id="bp-dot"
+                    style="display: none"></span></div>
+            <div class="nav-tab" data-tab="quests">Quests<span class="red-dot" id="quest-dot"
+                    style="display: none"></span></div>
         </div>
         <div class="main-content">
             <div class="tab-content active" id="battlepass-tab">
@@ -416,7 +2625,9 @@
                             <span class="free-label">Free</span>
                             <span class="prem-label">Premium</span>
                         </div>
-                        <div class="bp-track-scroll" id="bp-track-scroll"><div id="bp-track"></div></div>
+                        <div class="bp-track-scroll" id="bp-track-scroll">
+                            <div id="bp-track"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -456,6 +2667,7 @@
             <button class="debug-btn premium" onclick="purchasePremium()">Premium</button>
             <button class="debug-btn time" onclick="advanceWeek()">+7 Days</button>
             <button class="debug-btn reset" onclick="resetAll()">Reset</button>
+            <button class="debug-btn time" onclick="resetFTUE()">FTUE</button>
         </div>
     </div>
 
@@ -480,10 +2692,11 @@
             <div class="premium-modal-crown">👑</div>
             <div class="premium-modal-title">Premium</div>
             <div class="premium-modal-price">$10</div>
-            
+
             <div class="premium-spotlight-section">
                 <div class="premium-spotlight-label">Get 1 Copy Instantly!</div>
-                <div class="premium-spotlight-item" onclick="showRewardInfoFromPremiumModal('voidArmor')" style="cursor: pointer;">
+                <div class="premium-spotlight-item" onclick="showRewardInfoFromPremiumModal('voidArmor')"
+                    style="cursor: pointer;">
                     <div class="premium-spotlight-icon">⚔️</div>
                     <div class="premium-spotlight-info">
                         <div class="premium-spotlight-name">Void Emperor Armor</div>
@@ -491,15 +2704,15 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="premium-modal-divider"></div>
-            
+
             <div class="premium-instant-section">
                 <div class="premium-instant-label" id="premium-instant-label">✨ Claim Instantly</div>
                 <div class="premium-instant-rewards" id="premium-instant-rewards"></div>
                 <div class="premium-instant-more" id="premium-instant-more"></div>
             </div>
-            
+
             <div class="premium-modal-buttons">
                 <button class="premium-buy-btn" onclick="confirmPremiumPurchase()">Buy Now</button>
                 <button class="premium-cancel-btn" onclick="closePremiumModal()">Maybe Later</button>
@@ -547,6 +2760,17 @@
                 Claim All Rewards
             </button>
         </div>
+    </div>
+
+    <!-- FTUE Overlay -->
+    <div class="ftue-overlay" id="ftue-overlay">
+        <div class="ftue-backdrop" id="ftue-backdrop"></div>
+        <div class="ftue-spotlight" id="ftue-spotlight"></div>
+        <div class="ftue-tooltip arrow-up" id="ftue-tooltip">
+            <div class="ftue-text" id="ftue-text"></div>
+        </div>
+        <div class="ftue-tap-indicator" id="ftue-tap-indicator">👆</div>
+        <div class="ftue-step-indicator" id="ftue-steps"></div>
     </div>
 
     <script>
@@ -780,9 +3004,9 @@
         function handlePremiumRewardClick(level) {
             const rewards = state.bpRewards[level];
             if (rewards.premium.claimed) return;
-            
+
             const reward = rewardTypes[rewards.premium.type];
-            
+
             if (!state.hasPremium) {
                 // Show reward preview with Get Premium button
                 document.getElementById('preview-lock').style.display = 'block';
@@ -805,7 +3029,7 @@
 
         function handleSpotlightClick() {
             const reward = rewardTypes['voidArmor'];
-            
+
             if (state.grandRewardClaimed) {
                 // Already claimed, show info only
                 document.getElementById('preview-lock').style.display = 'none';
@@ -876,7 +3100,7 @@
         function renderWeeklyAccordion() {
             const container = document.getElementById('weekly-accordion');
             container.innerHTML = '';
-            
+
             if (!state.expandedWeek) {
                 state.expandedWeek = getWeekToExpand();
             }
@@ -887,7 +3111,7 @@
                 const expanded = state.expandedWeek === weekKey;
                 const complete = unlocked && isWeekComplete(weekKey);
                 const countdown = getUnlockCountdown(weekKey);
-                
+
                 const quests = state.quests.weekly[weekKey].quests;
                 const totalQuests = quests.length;
                 const completedQuests = quests.filter(q => q.progress >= q.target).length;
@@ -899,7 +3123,7 @@
 
                 let statusText = '';
                 let progressHTML = '';
-                
+
                 if (!unlocked) {
                     statusText = `Unlocks in ${countdown}`;
                 } else {
@@ -926,7 +3150,7 @@
 
                 const content = document.createElement('div');
                 content.className = `week-content ${expanded ? 'expanded' : ''}`;
-                
+
                 const inner = document.createElement('div');
                 inner.className = 'week-content-inner';
 
@@ -948,28 +3172,28 @@
             const canClaim = isComplete && !quest.claimed && (!isWeeklyQuest || state.hasPremium);
             const isLockedWeekly = isWeeklyQuest && !state.hasPremium && isComplete && !quest.claimed;
             const progressPercent = Math.min(100, (quest.progress / quest.target) * 100);
-            
+
             const questDiv = document.createElement('div');
             questDiv.className = `quest-item ${quest.type} ${quest.claimed ? 'claimed-quest' : ''} ${canClaim ? 'claimable-quest' : ''} ${isLockedWeekly ? 'locked-weekly' : ''}`;
             questDiv.id = `quest-${quest.id}`;
-            
+
             if (isLockedWeekly) {
                 questDiv.onclick = () => showPremiumModal('Unlock Premium to claim your weekly quest rewards!');
                 questDiv.style.cursor = 'pointer';
             }
-            
+
             let buttonHTML = '';
             if (canClaim && !isLockedWeekly) {
                 buttonHTML = `<div class="quest-btn claim" onclick="claimQuest('${quest.id}', '${weekKey}')">Claim</div>`;
             }
-            
+
             let rewardContent = '';
             const rewardClasses = canClaim ? 'claimable-reward' : (isLockedWeekly ? 'ready-glow' : '');
-            
+
             // Make reward clickable if claimable
             const rewardClickHandler = canClaim && !isLockedWeekly ? `onclick="claimQuest('${quest.id}', '${weekKey}')"` : '';
             const rewardCursor = canClaim && !isLockedWeekly ? 'style="cursor: pointer;"' : '';
-            
+
             if (quest.claimed) {
                 rewardContent = `
                     <div class="quest-reward-icon">✨</div>
@@ -987,7 +3211,7 @@
                     <div class="quest-reward-amount">+100 XP</div>
                 `;
             }
-            
+
             questDiv.innerHTML = `
                 <div class="quest-info">
                     <div class="quest-name">${quest.name}</div>
@@ -1001,7 +3225,7 @@
                     ${rewardContent}
                 </div>
             `;
-            
+
             return questDiv;
         }
 
@@ -1012,15 +3236,15 @@
                 const bClaimable = b.progress >= b.target && !b.claimed;
                 const aInProgress = a.progress < a.target && !a.claimed;
                 const bInProgress = b.progress < b.target && !b.claimed;
-                
+
                 // Claimable first
                 if (aClaimable && !bClaimable) return -1;
                 if (!aClaimable && bClaimable) return 1;
-                
+
                 // Then in progress
                 if (aInProgress && !bInProgress) return -1;
                 if (!aInProgress && bInProgress) return 1;
-                
+
                 // Claimed last
                 return 0;
             });
@@ -1039,25 +3263,25 @@
 
         function claimQuest(questId, weekKey) {
             let quest;
-            
+
             if (weekKey === 'daily') {
                 quest = state.quests.daily.find(q => q.id === questId);
             } else {
                 quest = state.quests.weekly[weekKey].quests.find(q => q.id === questId);
             }
-            
+
             if (!quest || quest.claimed) return;
             if (quest.progress < quest.target) return;
             if (quest.type === 'weekly' && !state.hasPremium) return;
-            
+
             // Instantly claim and move to bottom (no animation)
             quest.claimed = true;
             addXP(100, true);
-            
+
             if (weekKey !== 'daily') {
                 state.expandedWeek = getWeekToExpand();
             }
-            
+
             renderQuests();
             updateRedDots();
         }
@@ -1115,16 +3339,16 @@
             // Populate instant rewards
             const container = document.getElementById('premium-instant-rewards');
             container.innerHTML = '';
-            
+
             const unclaimedPremium = [];
             for (let level = 1; level <= state.level; level++) {
                 if (!state.bpRewards[level].premium.claimed) {
                     unclaimedPremium.push({ type: state.bpRewards[level].premium.type, level: level });
                 }
             }
-            
+
             const totalCount = unclaimedPremium.length;
-            
+
             // Update label with total count
             const labelEl = document.getElementById('premium-instant-label');
             if (totalCount > 0) {
@@ -1132,11 +3356,11 @@
             } else {
                 labelEl.textContent = '✨ Unlock Future Rewards';
             }
-            
+
             // Show last 5-10 rewards
             const rewardsToShow = unclaimedPremium.slice(-10);
             const remaining = totalCount - rewardsToShow.length;
-            
+
             rewardsToShow.forEach((item, index) => {
                 const reward = rewardTypes[item.type];
                 const rewardDiv = document.createElement('div');
@@ -1145,13 +3369,13 @@
                 rewardDiv.style.cursor = 'pointer';
                 rewardDiv.onclick = () => showRewardInfoFromPremiumModal(item.type);
                 container.appendChild(rewardDiv);
-                
+
                 // Animate in with delay
                 setTimeout(() => {
                     rewardDiv.classList.add('visible');
                 }, index * 100);
             });
-            
+
             // Show "more" text
             const moreText = document.getElementById('premium-instant-more');
             if (remaining > 0) {
@@ -1163,7 +3387,7 @@
             } else {
                 moreText.style.display = 'none';
             }
-            
+
             // Add particles
             const particles = document.getElementById('premium-particles');
             particles.innerHTML = '';
@@ -1177,7 +3401,7 @@
                 particle.style.animationDuration = (2 + Math.random() * 2) + 's';
                 particles.appendChild(particle);
             }
-            
+
             document.getElementById('premium-modal').classList.add('active');
         }
 
@@ -1204,7 +3428,7 @@
 
         function confirmPremiumPurchase() {
             closePremiumModal();
-            
+
             // Gather all unclaimed premium rewards
             const unclaimedPremium = [];
             for (let level = 1; level <= state.level; level++) {
@@ -1212,7 +3436,7 @@
                     unclaimedPremium.push(state.bpRewards[level].premium.type);
                 }
             }
-            
+
             // Add particles - more of them for epic effect
             const particles = document.getElementById('purchase-particles');
             particles.innerHTML = '';
@@ -1228,24 +3452,24 @@
                 particle.style.height = particle.style.width;
                 particles.appendChild(particle);
             }
-            
+
             // Populate rewards grid with cascade animation
             const grid = document.getElementById('purchase-rewards-grid');
             grid.innerHTML = '';
-            
+
             const rewardsToShow = unclaimedPremium.slice(-10);
             rewardsToShow.forEach((type, index) => {
                 const rewardDiv = document.createElement('div');
                 rewardDiv.className = 'purchase-reward-item';
                 rewardDiv.innerHTML = rewardTypes[type].icon;
                 grid.appendChild(rewardDiv);
-                
+
                 // Cascade pop animation with delay
                 setTimeout(() => {
                     rewardDiv.classList.add('pop');
                 }, 800 + index * 120);
             });
-            
+
             // Update total text
             const totalEl = document.getElementById('purchase-rewards-total');
             if (unclaimedPremium.length > 10) {
@@ -1255,17 +3479,17 @@
             } else {
                 totalEl.textContent = '🎉 Premium Activated!';
             }
-            
+
             document.getElementById('purchase-celebration').classList.add('active');
         }
 
         function closePurchaseCelebration() {
             document.getElementById('purchase-celebration').classList.remove('active');
-            
+
             state.hasPremium = true;
             state.premiumDaysLeft = 30;
             updatePremiumButton();
-            
+
             renderBPTrack();
             renderQuests();
             updateRedDots();
@@ -1274,7 +3498,7 @@
         function updatePremiumButton() {
             const btn = document.getElementById('premium-button');
             const textEl = document.getElementById('premium-button-text');
-            
+
             if (state.hasPremium) {
                 btn.classList.add('owned');
                 textEl.innerHTML = `
@@ -1325,7 +3549,7 @@
                 if (state.hasPremium && !rewards.premium.claimed) bpClaimable++;
             }
             if (state.level >= 50 && !state.grandRewardClaimed) bpClaimable++;
-            
+
             const bpDot = document.getElementById('bp-dot');
             bpDot.style.display = bpClaimable > 0 ? 'block' : 'none';
 
@@ -1343,14 +3567,14 @@
                     }
                 });
             }
-            
+
             const questDot = document.getElementById('quest-dot');
             questDot.style.display = questClaimable > 0 ? 'block' : 'none';
         }
 
         function completeQuestFrom(source) {
             let incompleteQuests = [];
-            
+
             if (source === 'daily') {
                 incompleteQuests = state.quests.daily.filter(q => q.progress < q.target);
             } else {
@@ -1358,9 +3582,9 @@
                     incompleteQuests = state.quests.weekly[source].quests.filter(q => q.progress < q.target);
                 }
             }
-            
+
             if (incompleteQuests.length === 0) return;
-            
+
             const quest = incompleteQuests[Math.floor(Math.random() * incompleteQuests.length)];
             quest.progress = quest.target;
             renderQuests();
@@ -1370,13 +3594,13 @@
         function advanceWeek() {
             state.seasonDay += 7;
             state.seasonDaysLeft = Math.max(0, state.seasonDaysLeft - 7);
-            
+
             // Decrease premium days if active
             if (state.hasPremium) {
                 state.premiumDaysLeft = Math.max(0, state.premiumDaysLeft - 7);
                 updatePremiumButton();
             }
-            
+
             state.expandedWeek = getWeekToExpand();
             renderQuests();
             updateRedDots();
@@ -1413,6 +3637,227 @@
             });
         });
 
+        // FTUE System
+        const ftueState = {
+            active: false,
+            step: 0,
+            totalSteps: 4
+        };
+
+        const ftueSteps = [
+            {
+                target: () => document.querySelector('.nav-tab[data-tab="quests"]'),
+                text: '<strong>Complete Quests</strong> to earn XP! Tap to see your <strong>Daily</strong> & <strong>Weekly</strong> missions.',
+                arrow: 'up',
+                action: 'click-quests-tab'
+            },
+            {
+                target: () => document.querySelector('#daily-quests .quest-item.claimable-quest .quest-reward') || document.querySelector('#daily-quests .quest-item:first-child .quest-reward'),
+                text: 'Quest complete! <strong>Tap to claim</strong> your XP reward.',
+                arrow: 'left',
+                action: 'claim-quest'
+            },
+            {
+                target: () => document.querySelector('.nav-tab[data-tab="battlepass"]'),
+                text: 'XP unlocks <strong>Battle Pass rewards</strong>! Tap to see your progress.',
+                arrow: 'up',
+                action: 'click-bp-tab'
+            },
+            {
+                target: () => document.querySelector('.grand-reward-card'),
+                text: 'This is your <strong>Grand Prize!</strong> 🔒 Gold items are <strong>Premium</strong> exclusives.',
+                arrow: 'right',
+                action: 'show-spotlight'
+            }
+        ];
+
+        function isFTUEComplete() {
+            return localStorage.getItem('ftueComplete') === 'true';
+        }
+
+        function startFTUE() {
+            if (isFTUEComplete()) return;
+
+            // Temporarily complete a quest for FTUE demo (will be restored after)
+            const incompleteDaily = state.quests.daily.find(q => q.progress < q.target && !q.claimed);
+            if (incompleteDaily) {
+                ftueState.savedQuestId = incompleteDaily.id;
+                ftueState.savedProgress = incompleteDaily.progress;
+                incompleteDaily.progress = incompleteDaily.target;
+                renderQuests();
+            }
+
+            ftueState.active = true;
+            ftueState.step = 0;
+            document.getElementById('ftue-overlay').classList.add('active');
+            renderFTUEStepIndicator();
+            showFTUEStep(0);
+        }
+
+        function renderFTUEStepIndicator() {
+            const container = document.getElementById('ftue-steps');
+            container.innerHTML = '';
+            for (let i = 0; i < ftueState.totalSteps; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'ftue-step-dot';
+                if (i < ftueState.step) dot.classList.add('completed');
+                if (i === ftueState.step) dot.classList.add('active');
+                container.appendChild(dot);
+            }
+        }
+
+        function showFTUEStep(stepIndex) {
+            const step = ftueSteps[stepIndex];
+            const target = step.target();
+
+            if (!target) {
+                console.warn('FTUE target not found for step', stepIndex);
+                advanceFTUE();
+                return;
+            }
+
+            // Clear previous highlights
+            document.querySelectorAll('.ftue-highlight').forEach(el => el.classList.remove('ftue-highlight'));
+
+            // Position spotlight
+            const rect = target.getBoundingClientRect();
+            const spotlight = document.getElementById('ftue-spotlight');
+            const padding = 8;
+            spotlight.style.left = (rect.left - padding) + 'px';
+            spotlight.style.top = (rect.top - padding) + 'px';
+            spotlight.style.width = (rect.width + padding * 2) + 'px';
+            spotlight.style.height = (rect.height + padding * 2) + 'px';
+
+            // Highlight target
+            target.classList.add('ftue-highlight');
+
+            // Position tooltip
+            const tooltip = document.getElementById('ftue-tooltip');
+            tooltip.className = 'ftue-tooltip arrow-' + step.arrow;
+            document.getElementById('ftue-text').innerHTML = step.text;
+
+            // Calculate tooltip position
+            const tooltipWidth = 280;
+            let tooltipLeft, tooltipTop;
+
+            if (step.arrow === 'up') {
+                tooltipLeft = rect.left + rect.width / 2 - tooltipWidth / 2;
+                tooltipTop = rect.bottom + 20;
+            } else if (step.arrow === 'down') {
+                tooltipLeft = rect.left + rect.width / 2 - tooltipWidth / 2;
+                tooltipTop = rect.top - 120;
+            } else if (step.arrow === 'left') {
+                tooltipLeft = rect.right + 20;
+                tooltipTop = rect.top + rect.height / 2 - 50;
+            } else {
+                tooltipLeft = rect.left - tooltipWidth - 20;
+                tooltipTop = rect.top + rect.height / 2 - 50;
+            }
+
+            // Keep tooltip on screen
+            tooltipLeft = Math.max(10, Math.min(tooltipLeft, window.innerWidth - tooltipWidth - 10));
+            tooltipTop = Math.max(10, tooltipTop);
+
+            tooltip.style.left = tooltipLeft + 'px';
+            tooltip.style.top = tooltipTop + 'px';
+            tooltip.style.width = tooltipWidth + 'px';
+
+            // Position tap indicator on the target element
+            const tapIndicator = document.getElementById('ftue-tap-indicator');
+            tapIndicator.style.left = (rect.left + rect.width / 2 - 18) + 'px';
+            tapIndicator.style.top = (rect.top + rect.height / 2 - 18) + 'px';
+
+            // Attach click handler
+            target.onclick = function (e) {
+                handleFTUEAction(step.action, e);
+            };
+        }
+
+        function handleFTUEAction(action, e) {
+            if (action === 'click-quests-tab') {
+                // Switch to quests tab (visual only)
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.querySelector('.nav-tab[data-tab="quests"]').classList.add('active');
+                document.getElementById('quests-tab').classList.add('active');
+
+                setTimeout(() => advanceFTUE(), 300);
+            } else if (action === 'claim-quest') {
+                // Just advance - don't actually claim or give XP (walkthrough only)
+                setTimeout(() => advanceFTUE(), 300);
+            } else if (action === 'click-bp-tab') {
+                // Switch to Battle Pass tab (visual only)
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.querySelector('.nav-tab[data-tab="battlepass"]').classList.add('active');
+                document.getElementById('battlepass-tab').classList.add('active');
+
+                setTimeout(() => advanceFTUE(), 300);
+            } else if (action === 'show-spotlight') {
+                // Hide FTUE overlay first
+                document.getElementById('ftue-overlay').classList.remove('active');
+
+                // Show premium modal with emphasis on instant copy
+                const reward = rewardTypes['voidArmor'];
+                document.getElementById('preview-lock').style.display = 'block';
+                document.getElementById('preview-title').textContent = 'Grand Prize';
+                document.getElementById('preview-icon').textContent = reward.icon;
+                document.getElementById('preview-name').textContent = reward.name;
+                document.getElementById('preview-quantity').innerHTML = '<span style="color: var(--gold); font-weight: bold;">Get Premium now</span><br><span style="color: var(--green);">→ Receive 1 copy instantly!</span>';
+                document.getElementById('preview-buttons').innerHTML = `
+                    <button class="modal-btn confirm" onclick="closeFTUEAndShowPremium()">Get Premium</button>
+                    <button class="modal-btn cancel" onclick="closeFTUESpotlight()">Maybe Later</button>
+                `;
+                document.getElementById('reward-preview-modal').classList.add('active');
+            }
+        }
+
+        function closeFTUEAndShowPremium() {
+            document.getElementById('reward-preview-modal').classList.remove('active');
+            localStorage.setItem('ftueComplete', 'true');
+            showPremiumModal();
+        }
+
+        function closeFTUESpotlight() {
+            document.getElementById('reward-preview-modal').classList.remove('active');
+            endFTUE();
+        }
+
+        function advanceFTUE() {
+            ftueState.step++;
+
+            if (ftueState.step >= ftueState.totalSteps) {
+                endFTUE();
+            } else {
+                renderFTUEStepIndicator();
+                showFTUEStep(ftueState.step);
+            }
+        }
+
+        function endFTUE() {
+            ftueState.active = false;
+            document.getElementById('ftue-overlay').classList.remove('active');
+            document.querySelectorAll('.ftue-highlight').forEach(el => el.classList.remove('ftue-highlight'));
+
+            // Restore the quest progress that was temporarily modified for FTUE
+            if (ftueState.savedQuestId) {
+                const quest = state.quests.daily.find(q => q.id === ftueState.savedQuestId);
+                if (quest && !quest.claimed) {
+                    quest.progress = ftueState.savedProgress;
+                    renderQuests();
+                }
+                ftueState.savedQuestId = null;
+                ftueState.savedProgress = null;
+            }
+
+            localStorage.setItem('ftueComplete', 'true');
+        }
+
+        function resetFTUE() {
+            localStorage.removeItem('ftueComplete');
+            location.reload();
+        }
+
         function init() {
             initBPRewards();
             initQuests();
@@ -1420,8 +3865,16 @@
             renderBPTrack();
             renderQuests();
             updateRedDots();
+
+            // Start FTUE after a short delay if not completed
+            setTimeout(() => {
+                if (!isFTUEComplete()) {
+                    startFTUE();
+                }
+            }, 500);
         }
         init();
     </script>
 </body>
+
 </html>
